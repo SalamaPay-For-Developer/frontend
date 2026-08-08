@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { AppSidebar } from "@/components/app-sidebar"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -31,12 +32,44 @@ import {
   CheckmarkBadgeIcon,
 } from "@hugeicons/core-free-icons"
 import { useAuth } from "@/lib/auth-context"
+import { walletsApi, paymentsApi } from "@/lib/api"
+import type { Wallet, Transaction } from "@/lib/types"
 import Link from "next/link"
 
 export default function Page() {
   const { user, activeBusiness, businesses } = useAuth()
+  const [wallets, setWallets] = useState<Wallet[]>([])
+  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const greeting = user ? `Habari, ${user.full_name.split(" ")[0]}!` : "Habari!"
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [walletData, txData] = await Promise.all([
+          walletsApi.list().catch(() => []),
+          paymentsApi.transactions().catch(() => []),
+        ])
+        setWallets(walletData)
+        setTransactions(txData)
+      } catch {
+        // handle error
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
+
+  const totalBalance = wallets.reduce((sum, w) => sum + Number(w.balance), 0)
+  const moneyIn = transactions
+    .filter((t) => t.type === "COLLECTION" && t.status === "SUCCESS")
+    .reduce((sum, t) => sum + Number(t.amount), 0)
+  const moneyOut = transactions
+    .filter((t) => t.type === "PAYOUT" && t.status === "SUCCESS")
+    .reduce((sum, t) => sum + Number(t.amount), 0)
+  const recentTransactions = transactions.slice(0, 5)
 
   return (
     <SidebarProvider>
@@ -119,8 +152,10 @@ export default function Page() {
                 <HugeiconsIcon icon={Wallet01Icon} className="size-4 opacity-70" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">TZS 0</div>
-                <p className="text-xs opacity-70 mt-1">No transactions yet</p>
+                <div className="text-2xl font-bold">TZS {totalBalance.toLocaleString()}</div>
+                <p className="text-xs opacity-70 mt-1">
+                  {wallets.length > 0 ? `${wallets.length} wallet${wallets.length > 1 ? "s" : ""}` : "No wallets yet"}
+                </p>
               </CardContent>
             </Card>
             <Card className="border-none shadow-sm dark:bg-muted/50">
@@ -129,8 +164,10 @@ export default function Page() {
                 <HugeiconsIcon icon={ArrowDown01Icon} className="size-4 text-green-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">TZS 0</div>
-                <p className="text-xs text-muted-foreground mt-1">This week</p>
+                <div className="text-2xl font-bold">TZS {moneyIn.toLocaleString()}</div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {transactions.filter((t) => t.type === "COLLECTION" && t.status === "SUCCESS").length} successful
+                </p>
               </CardContent>
             </Card>
             <Card className="border-none shadow-sm dark:bg-muted/50">
@@ -139,8 +176,10 @@ export default function Page() {
                 <HugeiconsIcon icon={ArrowUp01Icon} className="size-4 text-destructive" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">TZS 0</div>
-                <p className="text-xs text-muted-foreground mt-1">This week</p>
+                <div className="text-2xl font-bold">TZS {moneyOut.toLocaleString()}</div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {transactions.filter((t) => t.type === "PAYOUT" && t.status === "SUCCESS").length} successful
+                </p>
               </CardContent>
             </Card>
             <Card className="border-none shadow-sm dark:bg-muted/50">
@@ -163,9 +202,40 @@ export default function Page() {
                 <CardTitle>Recent Activity</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center justify-center py-8 text-muted-foreground">
-                  No recent activity.
-                </div>
+                {isLoading ? (
+                  <div className="flex items-center justify-center py-8 text-muted-foreground">
+                    Loading...
+                  </div>
+                ) : recentTransactions.length === 0 ? (
+                  <div className="flex items-center justify-center py-8 text-muted-foreground">
+                    No recent activity.
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-3">
+                    {recentTransactions.map((tx) => (
+                      <div key={tx.id} className="flex items-center justify-between border-b pb-3 last:border-0">
+                        <div className="flex items-center gap-3">
+                          <div className={`flex size-8 items-center justify-center rounded-full ${tx.type === "COLLECTION" ? "bg-green-500/10" : "bg-destructive/10"}`}>
+                            <HugeiconsIcon
+                              icon={tx.type === "COLLECTION" ? ArrowDown01Icon : ArrowUp01Icon}
+                              className={`size-4 ${tx.type === "COLLECTION" ? "text-green-500" : "text-destructive"}`}
+                            />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium">{tx.channel}</p>
+                            <p className="text-xs text-muted-foreground">{tx.reference}</p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm font-medium">TZS {Number(tx.amount).toLocaleString()}</p>
+                          <Badge variant={tx.status === "SUCCESS" ? "default" : tx.status === "PENDING" ? "secondary" : "destructive"}>
+                            {tx.status}
+                          </Badge>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
             <Card className="lg:col-span-3 border-none shadow-sm dark:bg-muted/50">

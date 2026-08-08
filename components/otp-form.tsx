@@ -18,29 +18,69 @@ import {
 } from "@/components/ui/input-otp"
 import { Spinner } from "@/components/ui/spinner"
 import { useAuth } from "@/lib/auth-context"
+import { authApi, ApiError } from "@/lib/api"
 
 export function OTPForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const [isLoading, setIsLoading] = useState(false)
+  const [isResending, setIsResending] = useState(false)
   const [value, setValue] = useState("")
   const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
   const { refreshUser } = useAuth()
   const router = useRouter()
+
+  const handleResend = async () => {
+    const phone_number = typeof window !== "undefined" ? localStorage.getItem("registered_phone") : null
+    if (!phone_number) {
+      setError("Phone number not found. Please register again.")
+      return
+    }
+
+    setError("")
+    setSuccess("")
+    setIsResending(true)
+    try {
+      await authApi.resendOtp(phone_number)
+      setSuccess("New OTP code sent to your phone.")
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.data?.detail as string || err.message)
+      } else {
+        setError("Failed to resend OTP. Please try again.")
+      }
+    } finally {
+      setIsResending(false)
+    }
+  }
 
   const handleSubmit = async () => {
     if (value.length !== 6) return
 
+    const phone_number = typeof window !== "undefined" ? localStorage.getItem("registered_phone") : null
+    if (!phone_number) {
+      setError("Phone number not found. Please register again.")
+      router.push("/auth/register")
+      return
+    }
+
     setError("")
+    setSuccess("")
     setIsLoading(true)
     try {
-      // OTP verification endpoint will be added to backend later
-      // For now, just refresh user and proceed
+      await authApi.verifyOtp(phone_number, value)
+      setSuccess("Account verified successfully!")
+      localStorage.removeItem("registered_phone")
       await refreshUser()
-      router.push("/dashboard")
-    } catch {
-      setError("Verification failed. Please try again.")
+      router.push("/auth/login")
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.data?.detail as string || err.message)
+      } else {
+        setError("Verification failed. Please try again.")
+      }
     } finally {
       setIsLoading(false)
     }
@@ -58,6 +98,11 @@ export function OTPForm({
         {error && (
           <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
             {error}
+          </div>
+        )}
+        {success && (
+          <div className="rounded-md bg-green-500/10 p-3 text-sm text-green-600 dark:text-green-500">
+            {success}
           </div>
         )}
         <Field className="flex flex-col items-center gap-4">
@@ -96,8 +141,12 @@ export function OTPForm({
         <Field>
           <FieldDescription className="text-center">
             Didn&apos;t receive the code?{" "}
-            <button className="text-primary underline underline-offset-4 hover:opacity-80">
-              Resend Code
+            <button
+              onClick={handleResend}
+              disabled={isResending}
+              className="text-primary underline underline-offset-4 hover:opacity-80 disabled:opacity-50"
+            >
+              {isResending ? "Sending..." : "Resend Code"}
             </button>
           </FieldDescription>
         </Field>

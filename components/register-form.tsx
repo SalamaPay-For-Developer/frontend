@@ -79,6 +79,7 @@ export function RegisterForm({
         password,
         email: email || undefined,
       })
+      localStorage.setItem("registered_phone", fullPhone)
       router.push("/auth/otp")
     } catch (err) {
       if (err instanceof ApiError) {

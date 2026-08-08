@@ -23,22 +23,23 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { apiFetch } from "@/lib/api"
+import { walletsApi } from "@/lib/api"
 import type { Wallet } from "@/lib/types"
 import { useAuth } from "@/lib/auth-context"
 
 export default function WalletsPage() {
   const [wallets, setWallets] = useState<Wallet[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState("")
   const { activeBusiness } = useAuth()
 
   useEffect(() => {
     const fetchWallets = async () => {
       try {
-        const data = await apiFetch<Wallet[]>("/wallets/wallets/")
+        const data = await walletsApi.list()
         setWallets(data)
-      } catch {
-        // handle error
+      } catch (err) {
+        setError("Failed to load wallets. Please try again.")
       } finally {
         setIsLoading(false)
       }
@@ -81,6 +82,12 @@ export default function WalletsPage() {
             <div className="flex items-center justify-center py-8">
               <Spinner className="size-6" />
             </div>
+          ) : error ? (
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center py-12 gap-4">
+                <p className="text-destructive">{error}</p>
+              </CardContent>
+            </Card>
           ) : wallets.length === 0 ? (
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12 gap-4">

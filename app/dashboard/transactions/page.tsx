@@ -43,14 +43,15 @@ const STATUS_COLORS: Record<string, "default" | "secondary" | "destructive" | "o
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState("")
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const data = await paymentsApi.transactions()
         setTransactions(data)
-      } catch {
-        // handle error
+      } catch (err) {
+        setError("Failed to load transactions. Please try again.")
       } finally {
         setIsLoading(false)
       }
@@ -97,6 +98,10 @@ export default function TransactionsPage() {
               {isLoading ? (
                 <div className="flex items-center justify-center py-8">
                   <Spinner className="size-6" />
+                </div>
+              ) : error ? (
+                <div className="flex items-center justify-center py-8 text-destructive">
+                  {error}
                 </div>
               ) : transactions.length === 0 ? (
                 <div className="flex items-center justify-center py-8 text-muted-foreground">

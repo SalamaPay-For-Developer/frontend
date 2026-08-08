@@ -116,6 +116,30 @@ export const authApi = {
     ),
 
   me: () => apiFetch<import("@/lib/types").User>("/accounts/users/me/"),
+
+  verifyOtp: (phone_number: string, otp_code: string) =>
+    apiFetch<{ detail: string; verified: boolean }>("/accounts/verify-otp/", {
+      method: "POST",
+      body: JSON.stringify({ phone_number, otp_code }),
+    }),
+
+  resendOtp: (phone_number: string) =>
+    apiFetch<{ detail: string }>("/accounts/resend-otp/", {
+      method: "POST",
+      body: JSON.stringify({ phone_number }),
+    }),
+
+  forgotPassword: (phone_number: string) =>
+    apiFetch<{ detail: string }>("/accounts/forgot-password/", {
+      method: "POST",
+      body: JSON.stringify({ phone_number }),
+    }),
+
+  resetPassword: (phone_number: string, new_password: string) =>
+    apiFetch<{ detail: string }>("/accounts/reset-password/", {
+      method: "POST",
+      body: JSON.stringify({ phone_number, new_password }),
+    }),
 }
 
 // Business API
@@ -175,6 +199,12 @@ export const paymentsApi = {
     }),
   transactionStatus: (reference: string) =>
     apiFetch<Record<string, unknown>>(`/payments/transactions/${reference}/status/`),
+}
+
+// Wallets API
+export const walletsApi = {
+  list: () => apiFetch<import("@/lib/types").Wallet[]>("/wallets/wallets/"),
+  retrieve: (id: string) => apiFetch<import("@/lib/types").Wallet>(`/wallets/wallets/${id}/`),
 }
 
 export { API_BASE_URL }

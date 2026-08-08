@@ -1,3 +1,5 @@
+"use client"
+
 import { AppSidebar } from "@/components/app-sidebar"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -17,16 +19,25 @@ import {
 } from "@/components/ui/sidebar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ModeToggle } from "@/components/mode-toggle"
+import { Badge } from "@/components/ui/badge"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { 
-  Wallet01Icon, 
-  ArrowUp01Icon, 
-  ArrowDown01Icon, 
+import {
+  Wallet01Icon,
+  ArrowUp01Icon,
+  ArrowDown01Icon,
   UserGroupIcon,
-  CreditCardIcon
+  CreditCardIcon,
+  PlusSignIcon,
+  CheckmarkBadgeIcon,
 } from "@hugeicons/core-free-icons"
+import { useAuth } from "@/lib/auth-context"
+import Link from "next/link"
 
 export default function Page() {
+  const { user, activeBusiness, businesses } = useAuth()
+
+  const greeting = user ? `Habari, ${user.full_name.split(" ")[0]}!` : "Habari!"
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -58,9 +69,48 @@ export default function Page() {
         </header>
         <div className="flex flex-1 flex-col gap-6 p-6">
           <div className="flex flex-col gap-2">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground">Habari, Amina!</h1>
-            <p className="text-muted-foreground">Karibu kwenye dashboard yako ya Salamapay.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">{greeting}</h1>
+            <p className="text-muted-foreground">
+              Karibu kwenye dashboard yako ya Salamapay.
+            </p>
           </div>
+
+          {/* No businesses - show onboarding CTA */}
+          {businesses.length === 0 && (
+            <Card className="border-primary/20 bg-primary/5">
+              <CardContent className="flex flex-col items-center justify-center gap-4 py-12">
+                <div className="flex size-12 items-center justify-center rounded-full bg-primary/10">
+                  <HugeiconsIcon icon={PlusSignIcon} className="size-6 text-primary" />
+                </div>
+                <div className="text-center">
+                  <h3 className="font-semibold text-lg">Start Your Journey</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Create your first business to start accepting payments.
+                  </p>
+                </div>
+                <Button render={<Link href="/dashboard/onboarding" />}>
+                  <HugeiconsIcon icon={PlusSignIcon} className="size-4" />
+                  Add Business
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Active business - show KYC status */}
+          {activeBusiness && (
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-muted-foreground">Business:</span>
+              <span className="font-medium">{activeBusiness.business_name}</span>
+              <Badge variant={activeBusiness.kyc_status === "APPROVED" ? "default" : "secondary"}>
+                KYC: {activeBusiness.kyc_status}
+              </Badge>
+              {activeBusiness.kyc_status !== "APPROVED" && (
+                <Button variant="outline" size="sm" render={<Link href="/dashboard/kyc" />}>
+                  Complete KYC
+                </Button>
+              )}
+            </div>
+          )}
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card className="border-none shadow-sm bg-primary text-primary-foreground">
@@ -69,8 +119,8 @@ export default function Page() {
                 <HugeiconsIcon icon={Wallet01Icon} className="size-4 opacity-70" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">TZS 1,245,000</div>
-                <p className="text-xs opacity-70 mt-1">+12.5% from last month</p>
+                <div className="text-2xl font-bold">TZS 0</div>
+                <p className="text-xs opacity-70 mt-1">No transactions yet</p>
               </CardContent>
             </Card>
             <Card className="border-none shadow-sm dark:bg-muted/50">
@@ -79,7 +129,7 @@ export default function Page() {
                 <HugeiconsIcon icon={ArrowDown01Icon} className="size-4 text-green-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">TZS 850,000</div>
+                <div className="text-2xl font-bold">TZS 0</div>
                 <p className="text-xs text-muted-foreground mt-1">This week</p>
               </CardContent>
             </Card>
@@ -89,18 +139,20 @@ export default function Page() {
                 <HugeiconsIcon icon={ArrowUp01Icon} className="size-4 text-destructive" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">TZS 320,000</div>
+                <div className="text-2xl font-bold">TZS 0</div>
                 <p className="text-xs text-muted-foreground mt-1">This week</p>
               </CardContent>
             </Card>
             <Card className="border-none shadow-sm dark:bg-muted/50">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Active Cards</CardTitle>
-                <HugeiconsIcon icon={CreditCardIcon} className="size-4 text-primary" />
+                <CardTitle className="text-sm font-medium">Businesses</CardTitle>
+                <HugeiconsIcon icon={CheckmarkBadgeIcon} className="size-4 text-primary" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">3</div>
-                <p className="text-xs text-muted-foreground mt-1">All systems active</p>
+                <div className="text-2xl font-bold">{businesses.length}</div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {businesses.length === 1 ? "Active" : "Active businesses"}
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -111,24 +163,8 @@ export default function Page() {
                 <CardTitle>Recent Activity</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-6">
-                  {[
-                    { name: "Sent to Juma Msuya", amount: "- TZS 45,000", time: "2 hours ago", icon: ArrowUp01Icon, color: "text-destructive" },
-                    { name: "Received from Mama Sarah", amount: "+ TZS 120,000", time: "5 hours ago", icon: ArrowDown01Icon, color: "text-green-500" },
-                    { name: "Electricity Bill (LUKU)", amount: "- TZS 50,000", time: "Yesterday", icon: ArrowUp01Icon, color: "text-destructive" },
-                    { name: "Top-up Wallet", amount: "+ TZS 200,000", time: "Yesterday", icon: ArrowDown01Icon, color: "text-green-500" },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-4">
-                      <div className={cn("size-9 rounded-full bg-muted flex items-center justify-center", item.color)}>
-                        <HugeiconsIcon icon={item.icon} className="size-4" />
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <p className="text-sm font-medium leading-none">{item.name}</p>
-                        <p className="text-xs text-muted-foreground">{item.time}</p>
-                      </div>
-                      <div className={cn("text-sm font-bold", item.color)}>{item.amount}</div>
-                    </div>
-                  ))}
+                <div className="flex items-center justify-center py-8 text-muted-foreground">
+                  No recent activity.
                 </div>
               </CardContent>
             </Card>
@@ -137,21 +173,21 @@ export default function Page() {
                 <CardTitle>Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="grid grid-cols-2 gap-4">
-                <Button variant="outline" className="h-20 flex-col gap-2 border-dashed">
-                  <HugeiconsIcon icon={Wallet01Icon} className="size-5" />
-                  Send Money
+                <Button variant="outline" className="h-20 flex-col gap-2 border-dashed" render={<Link href="/dashboard/onboarding" />}>
+                  <HugeiconsIcon icon={PlusSignIcon} className="size-5" />
+                  New Business
                 </Button>
-                <Button variant="outline" className="h-20 flex-col gap-2 border-dashed">
+                <Button variant="outline" className="h-20 flex-col gap-2 border-dashed" render={<Link href="/dashboard/kyc" />}>
+                  <HugeiconsIcon icon={CheckmarkBadgeIcon} className="size-5" />
+                  Verify KYC
+                </Button>
+                <Button variant="outline" className="h-20 flex-col gap-2 border-dashed" render={<Link href="/dashboard/transactions" />}>
                   <HugeiconsIcon icon={CreditCardIcon} className="size-5" />
-                  Pay Bills
+                  Transactions
                 </Button>
-                <Button variant="outline" className="h-20 flex-col gap-2 border-dashed">
-                  <HugeiconsIcon icon={ArrowUp01Icon} className="size-5" />
-                  Top-up
-                </Button>
-                <Button variant="outline" className="h-20 flex-col gap-2 border-dashed">
-                  <HugeiconsIcon icon={UserGroupIcon} className="size-5" />
-                  Invite Friend
+                <Button variant="outline" className="h-20 flex-col gap-2 border-dashed" render={<Link href="/dashboard/wallets" />}>
+                  <HugeiconsIcon icon={Wallet01Icon} className="size-5" />
+                  Wallets
                 </Button>
               </CardContent>
             </Card>
@@ -161,4 +197,5 @@ export default function Page() {
     </SidebarProvider>
   )
 }
+
 

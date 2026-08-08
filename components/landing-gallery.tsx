@@ -19,19 +19,29 @@ const galleryItems = [
     category: "Solutions",
   },
   {
-    image: "/34979.jpg",
+    image: "/3263.jpg",
     title: "Secure Wallets",
     category: "Security",
   },
   {
-    image: "/2150384779.jpg",
+    image: "/2149893741.jpg",
     title: "Digital Invoicing",
     category: "Tools",
   },
   {
-    image: "/34979.jpg",
+    image: "/123077.jpg",
     title: "Merchant Portal",
     category: "Dashboard",
+  },
+  {
+    image: "/12623.jpg",
+    title: "Smart Analytics",
+    category: "Insights",
+  },
+  {
+    image: "/2147936151.jpg",
+    title: "Seamless Checkout",
+    category: "Commerce",
   },
 ]
 

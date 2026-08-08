@@ -7,7 +7,6 @@ import {
   WorkflowSquare01Icon,
   ShoppingBag01Icon
 } from "@hugeicons/core-free-icons"
-import { cn } from "@/lib/utils"
 
 export function LandingIntegration() {
   return (
@@ -60,36 +59,36 @@ export function LandingIntegration() {
           </div>
 
           {/* Right Card: Payment Methods */}
-          <div className="rounded-[40px] bg-background dark:bg-muted/10 p-10 md:p-12 border border-border/50 group">
-            <div className="max-w-xs mb-12">
+          <div className="rounded-[40px] bg-background dark:bg-muted/10 p-10 md:p-12 border border-border/50 group overflow-hidden">
+            <div className="max-w-xs mb-8">
               <h3 className="text-2xl font-bold mb-4">Works with all payment methods</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Accept M-Pesa, Airtel Money, and bank transfers. All through one payment page.
               </p>
             </div>
 
-            {/* Payment Methods Grid */}
-            <div className="grid grid-cols-3 gap-3 md:gap-4">
+            {/* Real Payment Methods Image */}
+            <div className="relative rounded-2xl overflow-hidden border border-border/50 shadow-lg group-hover:shadow-xl transition-shadow duration-500">
+              <img
+                src="/payment-methods.png"
+                alt="Salamapay supported payment methods"
+                className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-700"
+              />
+            </div>
+
+            {/* Payment Methods Pills */}
+            <div className="flex flex-wrap gap-2 mt-6">
               {[
-                { name: "m-pesa", color: "text-red-600" },
-                { name: "Tigo Pesa", color: "text-blue-600" },
-                { name: "airtel Money", color: "text-red-500" },
-                { name: "halo pesa", color: "text-orange-500" },
-                { name: "VISA", color: "text-blue-800", font: "italic font-black" },
-                { name: "mastercard", color: "text-orange-600", font: "font-bold" },
-                { name: "G Pay", color: "text-foreground", font: "font-medium" },
-                { name: "Apple Pay", color: "text-foreground", font: "font-medium" },
-                { name: "PayPal", color: "text-blue-700", font: "italic font-bold" },
-              ].map((item, i) => (
-                <div key={i} className="aspect-[4/3] rounded-2xl bg-muted/30 border border-border/30 flex items-center justify-center p-4 hover:bg-background hover:shadow-lg transition-all duration-300">
-                   <span className={cn("text-[10px] md:text-xs text-center leading-none", item.color, item.font)}>
-                     {item.name}
-                   </span>
-                </div>
+                "M-Pesa", "Tigo Pesa", "Airtel Money", "Halo Pesa",
+                "VISA", "Mastercard", "Google Pay", "Apple Pay",
+              ].map((name, i) => (
+                <span
+                  key={i}
+                  className="px-3 py-1.5 rounded-full bg-muted/40 border border-border/40 text-xs font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-all duration-300"
+                >
+                  {name}
+                </span>
               ))}
-              <div className="col-span-3 aspect-[8/1] rounded-xl bg-primary/5 border border-primary/20 flex items-center justify-center p-2 mt-2">
-                 <span className="text-[8px] font-bold text-primary uppercase tracking-[0.2em]">And many more...</span>
-              </div>
             </div>
           </div>
         </div>

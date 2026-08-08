@@ -109,7 +109,7 @@ export const authApi = {
       body: JSON.stringify({ phone_number, password }),
     }),
 
-  register: (data: { phone_number: string; full_name: string; password: string; email?: string }) =>
+  register: (data: { phone_number: string; full_name: string; password: string; email: string }) =>
     apiFetch<{ id: string; phone_number: string; full_name: string }>(
       "/accounts/register/",
       { method: "POST", body: JSON.stringify(data) }

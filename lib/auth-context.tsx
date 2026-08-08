@@ -13,7 +13,7 @@ interface AuthContextType {
   isLoading: boolean
   isAuthenticated: boolean
   login: (phone: string, password: string) => Promise<void>
-  register: (data: { phone_number: string; full_name: string; password: string; email?: string }) => Promise<void>
+  register: (data: { phone_number: string; full_name: string; password: string; email: string }) => Promise<void>
   logout: () => void
   refreshUser: () => Promise<void>
   refreshBusinesses: () => Promise<void>
@@ -78,7 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await refreshBusinesses()
   }, [refreshUser, refreshBusinesses])
 
-  const register = useCallback(async (data: { phone_number: string; full_name: string; password: string; email?: string }) => {
+  const register = useCallback(async (data: { phone_number: string; full_name: string; password: string; email: string }) => {
     await authApi.register(data)
   }, [])
 

@@ -77,7 +77,7 @@ export function RegisterForm({
         phone_number: fullPhone,
         full_name: fullName,
         password,
-        email: email || undefined,
+        email: email,
       })
       localStorage.setItem("registered_phone", fullPhone)
       router.push("/auth/otp")
@@ -125,13 +125,14 @@ export function RegisterForm({
           />
         </Field>
         <Field>
-          <FieldLabel htmlFor="email">Email Address (Optional)</FieldLabel>
+          <FieldLabel htmlFor="email">Email Address</FieldLabel>
           <Input
             id="email"
             type="email"
             placeholder="aminajuma@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </Field>
         <Field>
@@ -221,7 +222,7 @@ export function RegisterForm({
         <Field>
           <Button
             type="submit"
-            disabled={isLoading || password.length < 6 || password !== confirmPassword}
+            disabled={isLoading || password.length < 6 || password !== confirmPassword || !email}
           >
             {isLoading && <Spinner data-icon="inline-start" />}
             {isLoading ? "Creating account..." : "Create Account"}

@@ -8,24 +8,24 @@ import Link from "next/link"
 
 const headlines = [
   {
-    main: "Empower Your",
-    highlight: "Business",
-    sub: "The ultimate digital wallet and payment gateway built for Tanzanians. Manage transactions, pay bills, and grow with ease."
+    main: "Lipa na Kupokea",
+    highlight: "Malipo Kwa Simu",
+    sub: "App na web ya malipo kwa Tanzania. Pokea malipo kwa M-Pesa, Tigo Pesa, Airtel Money na HaloPesa — yote sehemu moja."
   },
   {
-    main: "Accept Every",
-    highlight: "Payment",
-    sub: "Seamlessly integrate M-Pesa, Tigo Pesa, and Airtel Money into your store. One link, infinite possibilities."
+    main: "Aina Mbalimbali za",
+    highlight: "Malipo",
+    sub: "Kupokea, kutuma, QR code, payment links, na malipo ya bills. Chagua njia yoyote ya malipo kulingana na biashara yako."
   },
   {
-    main: "Secure Your",
-    highlight: "Future",
-    sub: "World-class encryption for every transaction. Built in Dar es Salaam to serve the builders of modern Africa."
+    main: "Manage Biashara",
+    highlight: "Yako Kikamilifu",
+    sub: "Wallets, settlements, reports, staff management, na KYC — databashi yote ya biashara yako sehemu moja, kwa simu au kompyuta."
   },
   {
-    main: "Scale Your",
-    highlight: "Dream",
-    sub: "From small merchants to growing enterprises, Salamapay is the revenue engine you need to succeed."
+    main: "Kila Biashara",
+    highlight: "Ina Nafasi Yake",
+    sub: "Ongeza biashara nyingi, badilisha kati yake, na manage kila moja kivyake. Salamapay inakuruhusu kuendesha biashara zote kwa urahisi."
   }
 ]
 
@@ -95,6 +95,29 @@ export function LandingHero() {
           <Button variant="outline" size="lg" className="h-12 px-8 text-base">
             Watch Demo
           </Button>
+        </div>
+
+        {/* Feature chips */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mt-8 animate-in fade-in slide-in-from-bottom duration-1000 delay-600">
+          {[
+            "M-Pesa",
+            "Tigo Pesa",
+            "Airtel Money",
+            "QR Code",
+            "Payment Links",
+            "Wallets",
+            "Settlements",
+            "Reports",
+            "Staff Management",
+            "Multi-Business",
+          ].map((chip, i) => (
+            <span
+              key={i}
+              className="px-3 py-1.5 rounded-full bg-muted/40 border border-border/40 text-xs font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-all duration-300"
+            >
+              {chip}
+            </span>
+          ))}
         </div>
 
         {/* App Screenshot - Phone Mockup */}

@@ -17,7 +17,6 @@ import {
   InputOTPSeparator,
 } from "@/components/ui/input-otp"
 import { Spinner } from "@/components/ui/spinner"
-import { useAuth } from "@/lib/auth-context"
 import { authApi, ApiError } from "@/lib/api"
 
 export function OTPForm({
@@ -29,7 +28,6 @@ export function OTPForm({
   const [value, setValue] = useState("")
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
-  const { refreshUser } = useAuth()
   const router = useRouter()
 
   const handleResend = async () => {
@@ -71,13 +69,14 @@ export function OTPForm({
     setIsLoading(true)
     try {
       await authApi.verifyOtp(phone_number, value)
-      setSuccess("Account verified successfully!")
+      setSuccess("Account verified successfully! Redirecting to login...")
       localStorage.removeItem("registered_phone")
-      await refreshUser()
-      router.push("/auth/login")
+      setTimeout(() => {
+        router.push("/auth/login")
+      }, 1500)
     } catch (err) {
       if (err instanceof ApiError) {
-        setError(err.data?.detail as string || err.message)
+        setError(err.message)
       } else {
         setError("Verification failed. Please try again.")
       }

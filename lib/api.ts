@@ -89,10 +89,15 @@ export async function apiFetch<T = unknown>(
     } catch {
       // non-JSON error
     }
-    const message =
-      (errorData.detail as string) ||
-      (errorData.detail as string[])?.join(", ") ||
-      `Request failed with status ${res.status}`
+    let message = ""
+    if (typeof errorData.detail === "string") {
+      message = errorData.detail
+    } else if (Array.isArray(errorData.detail)) {
+      message = errorData.detail.join(", ")
+    } else {
+      const fieldErrors = Object.values(errorData).flat()
+      message = fieldErrors.join(", ") || `Request failed with status ${res.status}`
+    }
     throw new ApiError(message, res.status, errorData)
   }
 

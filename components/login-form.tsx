@@ -47,9 +47,15 @@ export function LoginForm({
       router.push("/dashboard")
     } catch (err) {
       if (err instanceof ApiError) {
-        setError(err.data?.detail as string || err.message)
+        const data = err.data as Record<string, unknown>
+        if (data?.needs_otp) {
+          localStorage.setItem("registered_phone", fullPhone)
+          router.push("/auth/otp")
+          return
+        }
+        setError(err.message)
       } else {
-        setError("Login failed. Please try again.")
+        setError("Login failed. Please check your connection and try again.")
       }
     } finally {
       setIsLoading(false)

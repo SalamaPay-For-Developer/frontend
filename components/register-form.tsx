@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -22,11 +22,6 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import {
-  Progress,
-  ProgressTrack,
-  ProgressIndicator,
-} from "@/components/ui/progress"
 import { useAuth } from "@/lib/auth-context"
 import { ApiError } from "@/lib/api"
 import Link from "next/link"
@@ -45,24 +40,6 @@ export function RegisterForm({
   const [error, setError] = useState("")
   const { register } = useAuth()
   const router = useRouter()
-
-  const passwordStrength = useMemo(() => {
-    if (password.length === 0) return 0
-    if (password.length < 6) return 25
-    
-    let strength = 50
-    if (/[A-Z]/.test(password)) strength += 15
-    if (/[0-9]/.test(password)) strength += 15
-    if (/[^A-Za-z0-9]/.test(password)) strength += 20
-    return Math.min(strength, 100)
-  }, [password])
-
-  const strengthColor = useMemo(() => {
-    if (passwordStrength <= 25) return "bg-destructive"
-    if (passwordStrength <= 50) return "bg-orange-500"
-    if (passwordStrength <= 75) return "bg-yellow-500"
-    return "bg-green-500"
-  }, [passwordStrength])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -83,12 +60,9 @@ export function RegisterForm({
       router.push("/auth/otp")
     } catch (err) {
       if (err instanceof ApiError) {
-        const data = err.data as Record<string, unknown>
-        const detail = data?.detail
-        const msg = typeof detail === "string" ? detail : Object.values(data).flat().join(", ") || err.message
-        setError(msg)
+        setError(err.message)
       } else {
-        setError("Registration failed. Please try again.")
+        setError("Registration failed. Please check your connection and try again.")
       }
     } finally {
       setIsLoading(false)
@@ -176,31 +150,10 @@ export function RegisterForm({
               />
             </InputGroupButton>
           </InputGroup>
-          {password.length > 0 && (
-            <div className="mt-2 space-y-1.5">
-              <div className="flex justify-between text-[10px] uppercase tracking-wider font-bold">
-                <span className="text-muted-foreground">Strength</span>
-                <span className={cn(
-                  passwordStrength <= 25 ? "text-destructive" :
-                  passwordStrength <= 50 ? "text-orange-500" :
-                  passwordStrength <= 75 ? "text-yellow-500" : "text-green-500"
-                )}>
-                  {passwordStrength <= 25 ? "Weak" :
-                   passwordStrength <= 50 ? "Fair" :
-                   passwordStrength <= 75 ? "Good" : "Strong"}
-                </span>
-              </div>
-              <Progress value={passwordStrength} className="h-1 flex-col gap-0">
-                <ProgressTrack>
-                  <ProgressIndicator className={strengthColor} />
-                </ProgressTrack>
-              </Progress>
-              {password.length < 6 && (
-                <p className="text-[10px] text-destructive font-medium">
-                  Password must be at least 6 characters
-                </p>
-              )}
-            </div>
+          {password.length > 0 && password.length < 6 && (
+            <p className="mt-1 text-[10px] text-destructive font-medium">
+              Password must be at least 6 characters
+            </p>
           )}
         </Field>
         <Field>

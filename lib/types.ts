@@ -257,6 +257,7 @@ export interface DeveloperWorkspace extends BaseModel {
   business_name: string
   business_type: string
   kyc_status: "PENDING" | "APPROVED" | "REJECTED"
+  kyc_verified: boolean
   environment: "SANDBOX" | "PRODUCTION"
   production_enabled: boolean
   production_approved_at: string | null
@@ -265,6 +266,10 @@ export interface DeveloperWorkspace extends BaseModel {
   test_completed: boolean
   allowed_domains: string[]
   ip_allowlist: string[]
+  support_email: string | null
+  support_phone: string | null
+  website: string | null
+  description: string | null
   setup_progress: {
     completed: number
     total: number

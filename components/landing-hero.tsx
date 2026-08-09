@@ -96,6 +96,24 @@ export function LandingHero() {
             Watch Demo
           </Button>
         </div>
+
+        {/* App Screenshot - Phone Mockup */}
+        <div className="mt-16 md:mt-24 animate-in fade-in slide-in-from-bottom duration-1000 delay-700">
+          <div className="relative mx-auto max-w-sm">
+            {/* Glow effect behind screenshot */}
+            <div className="absolute inset-0 bg-primary/20 blur-[60px] rounded-[3rem]" />
+            {/* Phone frame */}
+            <div className="relative rounded-[2rem] overflow-hidden border-[6px] border-background shadow-2xl bg-background ring-1 ring-border/50">
+              {/* Notch */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-background rounded-b-2xl z-10" />
+              <img
+                src="/app-screenshot.jpeg"
+                alt="Salamapay Mobile App"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )

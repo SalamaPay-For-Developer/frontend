@@ -3,7 +3,6 @@
 import * as React from "react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
@@ -17,7 +16,26 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Settings05Icon, SentIcon, PieChartIcon, MapsIcon, ChartRingIcon, PlusSignIcon } from "@hugeicons/core-free-icons"
+import {
+  Settings05Icon,
+  SentIcon,
+  PieChartIcon,
+  ChartRingIcon,
+  PlusSignIcon,
+  Wallet01Icon,
+  CreditCardIcon,
+  QrCode01Icon,
+  Link02Icon,
+  ChartColumnIcon,
+  BankIcon,
+  CustomerSupportIcon,
+  BellIcon,
+  UserCircleIcon,
+  Store04Icon,
+  UserGroupIcon,
+  Building04Icon,
+  FileHeartIcon,
+} from "@hugeicons/core-free-icons"
 import { useAuth } from "@/lib/auth-context"
 import Link from "next/link"
 
@@ -31,7 +49,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     plan: b.business_type,
   }))
 
-  const navMain = [
+  const hasBusiness = businesses.length > 0
+
+  const personalNav = [
     {
       title: "Dashboard",
       url: "/dashboard",
@@ -39,48 +59,94 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       isActive: true,
     },
     {
+      title: "Payments",
+      url: "/dashboard/payments",
+      icon: <HugeiconsIcon icon={CreditCardIcon} strokeWidth={2} />,
+      items: [
+        { title: "Make Payment", url: "/dashboard/payments" },
+        { title: "Receive Payment", url: "/dashboard/payments/receive" },
+        { title: "QR Payments", url: "/dashboard/payments/qr" },
+        { title: "Payment Links", url: "/dashboard/payments/links" },
+      ],
+    },
+    {
       title: "Transactions",
       url: "/dashboard/transactions",
       icon: <HugeiconsIcon icon={SentIcon} strokeWidth={2} />,
       items: [
         { title: "All Transactions", url: "/dashboard/transactions" },
+        { title: "Successful", url: "/dashboard/transactions?status=SUCCESS" },
         { title: "Pending", url: "/dashboard/transactions?status=PENDING" },
-        { title: "Completed", url: "/dashboard/transactions?status=SUCCESS" },
+        { title: "Failed", url: "/dashboard/transactions?status=FAILED" },
       ],
     },
     {
       title: "Wallets",
       url: "/dashboard/wallets",
+      icon: <HugeiconsIcon icon={Wallet01Icon} strokeWidth={2} />,
+    },
+    {
+      title: "Savings",
+      url: "/dashboard/savings",
       icon: <HugeiconsIcon icon={ChartRingIcon} strokeWidth={2} />,
-      items: [
-        { title: "My Wallets", url: "/dashboard/wallets" },
-      ],
     },
   ]
+
+  const businessNav = hasBusiness ? [
+    {
+      title: "Business Dashboard",
+      url: "/dashboard/business",
+      icon: <HugeiconsIcon icon={Store04Icon} strokeWidth={2} />,
+    },
+    {
+      title: "My Businesses",
+      url: "/dashboard/businesses",
+      icon: <HugeiconsIcon icon={Building04Icon} strokeWidth={2} />,
+    },
+    {
+      title: "Staff & Roles",
+      url: "/dashboard/staff",
+      icon: <HugeiconsIcon icon={UserGroupIcon} strokeWidth={2} />,
+    },
+    {
+      title: "Settlements",
+      url: "/dashboard/settlements",
+      icon: <HugeiconsIcon icon={BankIcon} strokeWidth={2} />,
+    },
+    {
+      title: "Reports",
+      url: "/dashboard/reports",
+      icon: <HugeiconsIcon icon={ChartColumnIcon} strokeWidth={2} />,
+    },
+    {
+      title: "KYC",
+      url: "/dashboard/kyc",
+      icon: <HugeiconsIcon icon={FileHeartIcon} strokeWidth={2} />,
+    },
+  ] : []
+
+  const navMain = [...personalNav, ...businessNav]
 
   const navSecondary = [
     {
+      title: "Notifications",
+      url: "/dashboard/notifications",
+      icon: <HugeiconsIcon icon={BellIcon} strokeWidth={2} />,
+    },
+    {
       title: "Support",
-      url: "#",
-      icon: <HugeiconsIcon icon={ChartRingIcon} strokeWidth={2} />,
+      url: "/dashboard/support",
+      icon: <HugeiconsIcon icon={CustomerSupportIcon} strokeWidth={2} />,
+    },
+    {
+      title: "Profile",
+      url: "/dashboard/profile",
+      icon: <HugeiconsIcon icon={UserCircleIcon} strokeWidth={2} />,
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/dashboard/settings",
       icon: <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />,
-    },
-  ]
-
-  const projects = [
-    {
-      name: "Customers",
-      url: "#",
-      icon: <HugeiconsIcon icon={MapsIcon} strokeWidth={2} />,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: <HugeiconsIcon icon={PieChartIcon} strokeWidth={2} />,
     },
   ]
 
@@ -115,7 +181,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMain} />
-        <NavProjects projects={projects} />
         <NavSecondary items={navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

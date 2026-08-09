@@ -1,8 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { AppSidebar } from "@/components/app-sidebar"
-import { ModeToggle } from "@/components/mode-toggle"
+import { useState } from "react"
+import { DashboardShell } from "@/components/dashboard-shell"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,20 +13,6 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { Separator } from "@/components/ui/separator"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
 import { businessApi, ApiError } from "@/lib/api"
 import { useAuth } from "@/lib/auth-context"
 
@@ -75,43 +60,19 @@ export default function KycPage() {
 
   if (!activeBusiness) {
     return (
-      <SidebarProvider>
-        <AppSidebar />
-        <SidebarInset>
-          <div className="flex flex-1 items-center justify-center p-6">
+      <DashboardShell breadcrumb="KYC">
+        <Card className="border-dashed">
+          <CardContent className="flex flex-col items-center justify-center py-12">
             <p className="text-muted-foreground">Please select or create a business first.</p>
-          </div>
-        </SidebarInset>
-      </SidebarProvider>
+          </CardContent>
+        </Card>
+      </DashboardShell>
     )
   }
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 data-vertical:h-4 data-vertical:self-auto" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>KYC Verification</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-          <div className="ml-auto px-4">
-            <ModeToggle />
-          </div>
-        </header>
-
-        <div className="flex flex-1 flex-col gap-6 p-6 max-w-2xl mx-auto w-full">
+    <DashboardShell breadcrumb="KYC Verification">
+      <div className="flex flex-col gap-6 max-w-2xl mx-auto w-full">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
               <h1 className="text-3xl font-bold tracking-tight">KYC Verification</h1>
@@ -210,8 +171,7 @@ export default function KycPage() {
               </Button>
             </FieldGroup>
           </form>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+      </div>
+    </DashboardShell>
   )
 }

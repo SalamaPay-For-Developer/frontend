@@ -7,14 +7,58 @@ import {
   InstagramIcon, 
   Linkedin01Icon, 
   Facebook01Icon,
-  ArrowRight01Icon
+  ArrowRight01Icon,
+  AppleIcon,
+  PlayStoreIcon
 } from "@hugeicons/core-free-icons"
 import { Separator } from "@/components/ui/separator"
+
+function DownloadButton({ icon: Icon, title, subtitle }: { icon: any, title: string, subtitle: string }) {
+  return (
+    <button className="flex items-center gap-3 px-4 py-2 bg-black text-white rounded-xl border border-zinc-800 hover:bg-zinc-900 transition-colors w-full sm:w-auto text-left">
+      <HugeiconsIcon icon={Icon} className="size-6 shrink-0" />
+      <div className="flex flex-col leading-tight">
+        <span className="text-[10px] uppercase font-medium text-zinc-400">{subtitle}</span>
+        <span className="text-sm font-bold">{title}</span>
+      </div>
+    </button>
+  )
+}
 
 export function LandingFooter() {
   return (
     <footer className="border-t bg-muted/30 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-16">
+        {/* App Store Card - Now at the top of the footer */}
+        <div className="mb-16 animate-in fade-in slide-in-from-bottom duration-1000">
+          <div className="relative mx-auto max-w-4xl p-8 md:p-12 rounded-[2rem] overflow-hidden border border-border shadow-xl bg-background">
+            {/* Background Pattern */}
+            <div 
+              className="absolute inset-0 z-0 opacity-[0.05] dark:opacity-[0.1]" 
+              style={{ 
+                backgroundImage: 'url(/hero-pattern.png)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+            />
+            {/* Overlay for contrast */}
+            <div className="absolute inset-0 bg-white/40 dark:bg-black/40 z-0" />
+            
+            <div className="relative z-10 flex flex-col items-center gap-6 text-center">
+              <div className="space-y-3">
+                <h3 className="text-2xl md:text-3xl font-bold tracking-tight">Download Salamapay mobile app</h3>
+                <p className="text-muted-foreground max-w-lg mx-auto text-sm md:text-base leading-relaxed">
+                  Salamapay in your pocket. Track payments, send payouts, and manage your business from anywhere.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center">
+                <DownloadButton icon={AppleIcon} title="App Store" subtitle="Download on the" />
+                <DownloadButton icon={PlayStoreIcon} title="Google Play" subtitle="Get it on" />
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 lg:col-span-2">
             <div className="flex items-center gap-2 mb-6">

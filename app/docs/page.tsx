@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { DocsLayout } from "@/components/docs/docs-layout"
 import { DocsSearch } from "@/components/docs/docs-search"
 import Link from "next/link"
@@ -11,129 +11,108 @@ import {
   Search01Icon, SentIcon, CreditCardIcon, WebhookIcon,
   ArrowDown01Icon, BankIcon, ArrowRight01Icon, CodeIcon,
   CheckmarkCircle01Icon, Cancel01Icon, Key01Icon,
+  Copy01Icon,
 } from "@hugeicons/core-free-icons"
 
 export default function DocsHomePage() {
   const [searchOpen, setSearchOpen] = useState(false)
+  const [headings, setHeadings] = useState<{ id: string; title: string; level: number }[]>([])
+
+  useEffect(() => {
+    const items = [
+      { id: "what-is-salamapay", title: "What is SalamaPay?", level: 2 },
+      { id: "base-url", title: "Base URL", level: 2 },
+      { id: "authentication", title: "Authentication", level: 2 },
+      { id: "quick-start", title: "Quick Start", level: 2 },
+    ]
+    setHeadings(items)
+  }, [])
 
   const quickLinks = [
     { title: "Payments", desc: "Accept mobile money, cards, and bank payments", href: "/docs/payments-overview", icon: SentIcon },
     { title: "Checkout", desc: "Hosted checkout sessions for your customers", href: "/docs/checkout-overview", icon: CreditCardIcon },
     { title: "Webhooks", desc: "Receive real-time payment notifications", href: "/docs/webhooks-overview", icon: WebhookIcon },
-    { title: "Utility Payments", desc: "Pay electricity, water, TV, and internet bills", href: "/docs/utility-overview", icon: ArrowDown01Icon },
-    { title: "Government Payments", desc: "Pay government bills via control numbers", href: "/docs/government-overview", icon: BankIcon },
-    { title: "Authentication", desc: "Secure your API with keys and signing", href: "/docs/auth-overview", icon: Key01Icon },
-  ]
-
-  const popularGuides = [
-    "Build your first payment",
-    "Create a checkout session",
-    "Handle webhooks",
-    "Verify a transaction",
-    "Go live checklist",
   ]
 
   return (
     <>
-      <DocsLayout>
-        {/* Hero */}
-        <div className="flex flex-col items-center text-center py-12 gap-6">
-          <div className="flex flex-col gap-3">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-              SalamaPay Developers
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl">
-              Build payments into your application. Simple APIs for collecting payments,
-              creating checkout sessions, managing transactions, and receiving real-time
-              payment notifications.
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button size="lg" render={<Link href="/docs/quickstart" />}>
-              Get Started
-              <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />
-            </Button>
-            <Button size="lg" variant="outline" render={<Link href="/docs/api-payments" />}>
-              <HugeiconsIcon icon={CodeIcon} className="size-4" />
-              API Reference
-            </Button>
-          </div>
-
-          {/* Search bar */}
-          <button
-            onClick={() => setSearchOpen(true)}
-            className="flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm text-muted-foreground hover:bg-accent transition-colors w-full max-w-md mt-2"
-          >
-            <HugeiconsIcon icon={Search01Icon} className="size-4" />
-            Search documentation...
-            <kbd className="ml-auto select-none rounded border bg-muted px-1.5 font-mono text-xs">
-              ⌘K
-            </kbd>
-          </button>
-        </div>
-
-        {/* What are you building? */}
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4">What are you building?</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {quickLinks.map((link) => (
-              <Link key={link.title} href={link.href}>
-                <Card className="border-none shadow-sm dark:bg-muted/50 hover:shadow-md transition-shadow cursor-pointer h-full">
-                  <CardContent className="p-5 flex flex-col gap-2">
-                    <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10">
-                      <HugeiconsIcon icon={link.icon} className="size-5 text-primary" />
-                    </div>
-                    <h3 className="font-semibold">{link.title}</h3>
-                    <p className="text-sm text-muted-foreground">{link.desc}</p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Popular Guides */}
-        <div className="mt-12">
-          <h2 className="text-xl font-semibold mb-4">Popular Guides</h2>
-          <div className="flex flex-col gap-2">
-            {popularGuides.map((guide, i) => (
-              <Link
-                key={guide}
-                href={i === 0 ? "/docs/quickstart" : i === 1 ? "/docs/create-checkout" : i === 2 ? "/docs/webhooks-overview" : i === 3 ? "/docs/retrieve-transaction" : "/docs/production-checklist"}
-                className="flex items-center justify-between rounded-lg border px-4 py-3 hover:bg-accent transition-colors"
-              >
-                <span className="text-sm font-medium">{guide}</span>
-                <HugeiconsIcon icon={ArrowRight01Icon} className="size-4 text-muted-foreground" />
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Feature highlights */}
-        <div className="mt-12 grid gap-4 sm:grid-cols-3">
-          <div className="flex flex-col gap-2 rounded-lg border p-5">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-green-50 dark:bg-green-950/30">
-              <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4 text-green-500" />
+      <DocsLayout headings={headings}>
+        <article className="flex flex-col gap-6">
+          <header className="flex flex-col gap-4 border-b pb-8">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground">SalamaPay Documentation</h1>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                What SalamaPay is, who it is for, and how to get started with the payments API.
+              </p>
             </div>
-            <h3 className="font-semibold text-sm">Secure by Design</h3>
-            <p className="text-xs text-muted-foreground">API keys, request signing, webhook verification, and idempotency built in.</p>
-          </div>
-          <div className="flex flex-col gap-2 rounded-lg border p-5">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-950/30">
-              <HugeiconsIcon icon={CodeIcon} className="size-4 text-blue-500" />
+
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" className="h-8 gap-2 text-xs font-semibold rounded-md">
+                <HugeiconsIcon icon={Copy01Icon} className="size-3.5" />
+                Copy Markdown
+              </Button>
+              <div className="flex items-center">
+                <Button variant="outline" size="sm" className="h-8 gap-2 text-xs font-semibold rounded-l-md border-r-0">
+                  Open
+                </Button>
+                <Button variant="outline" size="sm" className="h-8 px-2 rounded-r-md">
+                  <HugeiconsIcon icon={ArrowDown01Icon} className="size-3" />
+                </Button>
+              </div>
             </div>
-            <h3 className="font-semibold text-sm">Developer First</h3>
-            <p className="text-xs text-muted-foreground">Clean REST APIs, multi-language examples, and comprehensive documentation.</p>
+          </header>
+
+          <div className="docs-content flex flex-col gap-10 py-4 prose dark:prose-invert max-w-none prose-sm prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-pre:p-0 prose-pre:bg-transparent">
+            <section id="what-is-salamapay">
+              <p className="text-base leading-relaxed">
+                SalamaPay is a payment processing API that enables you to <span className="font-semibold text-foreground">accept payments via mobile money</span>, and send disbursements to mobile money and bank accounts.
+              </p>
+            </section>
+
+            <section id="base-url">
+              <h2 className="text-2xl font-bold tracking-tight mb-4">Base URL</h2>
+              <div className="relative group">
+                <pre className="rounded-lg border bg-zinc-50 dark:bg-zinc-900 p-4 font-mono text-sm overflow-x-auto transition-all group-hover:border-primary/30 shadow-sm">
+                  <code>https://api.lipasalama.co.tz/api/v1</code>
+                </pre>
+                <button className="absolute right-4 top-4 p-1.5 rounded-md hover:bg-accent text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                  <HugeiconsIcon icon={Copy01Icon} className="size-3.5" />
+                </button>
+              </div>
+            </section>
+
+            <section id="authentication">
+              <h2 className="text-2xl font-bold tracking-tight mb-4">Authentication</h2>
+              <p className="text-muted-foreground mb-4">
+                All API requests require authentication using an API key in the <code className="bg-muted px-1.5 py-0.5 rounded text-foreground font-mono">Authorization</code> header:
+              </p>
+              <div className="relative group">
+                <pre className="rounded-lg border bg-zinc-50 dark:bg-zinc-900 p-4 font-mono text-sm overflow-x-auto transition-all group-hover:border-primary/30 shadow-sm">
+                  <code className="text-green-600 dark:text-green-400">Authorization: Bearer your_api_key_here</code>
+                </pre>
+                <button className="absolute right-4 top-4 p-1.5 rounded-md hover:bg-accent text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
+                  <HugeiconsIcon icon={Copy01Icon} className="size-3.5" />
+                </button>
+              </div>
+            </section>
+
+            <section id="quick-start">
+              <h2 className="text-2xl font-bold tracking-tight mb-6">Quick Start</h2>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {quickLinks.map((link) => (
+                  <Link key={link.title} href={link.href}>
+                    <Card className="border border-border/50 shadow-sm bg-zinc-50 dark:bg-zinc-900/50 hover:border-primary/50 hover:shadow-md transition-all cursor-pointer h-full group rounded-lg">
+                      <CardContent className="p-6 flex flex-col gap-3">
+                        <h3 className="font-bold text-sm leading-tight text-muted-foreground">{link.title}</h3>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{link.desc}</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </section>
           </div>
-          <div className="flex flex-col gap-2 rounded-lg border p-5">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-purple-50 dark:bg-purple-950/30">
-              <HugeiconsIcon icon={SentIcon} className="size-4 text-purple-500" />
-            </div>
-            <h3 className="font-semibold text-sm">Tanzania-Ready</h3>
-            <p className="text-xs text-muted-foreground">Mobile money, utility bills, government payments, and local payment methods.</p>
-          </div>
-        </div>
+        </article>
       </DocsLayout>
 
       <DocsSearch open={searchOpen} onOpenChange={setSearchOpen} />

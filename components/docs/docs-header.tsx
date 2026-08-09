@@ -12,7 +12,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Search01Icon, Menu01Icon, Moon01Icon, Sun03Icon } from "@hugeicons/core-free-icons"
+import { Search01Icon, Menu01Icon, Moon01Icon, Sun03Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons"
 import { useTheme } from "next-themes"
 import { DOC_NAV } from "@/lib/docs-config"
 import { usePathname } from "next/navigation"
@@ -105,25 +105,20 @@ export function DocsHeader({ onSearchClick }: { onSearchClick?: () => void }) {
         </Sheet>
 
         {/* Logo */}
-        <Link href="/docs" className="flex items-center gap-2 shrink-0">
-          <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <span className="text-xs font-bold">SP</span>
-          </div>
-          <div className="hidden sm:block">
-            <p className="font-semibold text-sm leading-tight">SalamaPay</p>
-            <p className="text-xs text-muted-foreground leading-tight">Developers</p>
-          </div>
+        <Link href="/docs" className="flex items-center gap-2 shrink-0 mr-4">
+          <img src="/salamapaylogo.png" alt="Salamapay" className="size-7 object-contain" />
+          <span className="font-bold text-sm tracking-tight hidden sm:inline-block">Salamapay</span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-1 ml-4">
+        <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "rounded-lg px-3 py-1.5 text-sm font-medium transition-colors hover:bg-accent",
-                pathname === link.href && "bg-accent"
+                "text-xs font-semibold transition-colors hover:text-primary",
+                pathname === link.href ? "text-primary" : "text-muted-foreground"
               )}
             >
               {link.title}
@@ -131,37 +126,30 @@ export function DocsHeader({ onSearchClick }: { onSearchClick?: () => void }) {
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-4">
           {/* Search */}
           <button
             onClick={onSearchClick}
-            className="flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm text-muted-foreground hover:bg-accent transition-colors w-40 md:w-56"
+            className="flex items-center gap-3 rounded-md border bg-muted/50 px-3 py-1.5 text-xs text-muted-foreground hover:bg-accent transition-all w-48 md:w-64 group"
           >
-            <HugeiconsIcon icon={Search01Icon} className="size-4" />
-            <span className="hidden sm:inline">Search...</span>
-            <kbd className="ml-auto hidden md:inline-flex select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-xs">
-              ⌘K
-            </kbd>
+            <HugeiconsIcon icon={Search01Icon} className="size-3.5 group-hover:text-primary transition-colors" />
+            <span className="flex-1 text-left">Search</span>
+            <div className="flex items-center gap-1 opacity-60 font-mono text-[10px]">
+              <kbd className="rounded border bg-background px-1.5 py-0.5">Ctrl</kbd>
+              <kbd className="rounded border bg-background px-1.5 py-0.5">K</kbd>
+            </div>
           </button>
 
           {/* Theme toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-9"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
-            <HugeiconsIcon icon={Sun03Icon} className="size-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <HugeiconsIcon icon={Moon01Icon} className="absolute size-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </Button>
-
-          {/* CTA buttons */}
-          <div className="hidden md:flex items-center gap-2">
-            <Button variant="ghost" size="sm" render={<Link href="/auth/login" />}>
-              Sign In
-            </Button>
-            <Button size="sm" render={<Link href="/auth/register" />}>
-              Get Started
+          <div className="flex items-center gap-1 border-l pl-4 border-border/50">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8 rounded-md"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
+              <HugeiconsIcon icon={Sun03Icon} className="size-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <HugeiconsIcon icon={Moon01Icon} className="absolute size-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             </Button>
           </div>
         </div>

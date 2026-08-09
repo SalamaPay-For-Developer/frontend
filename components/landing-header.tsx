@@ -15,13 +15,13 @@ export function LandingHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between mx-auto px-4">
-        {/* Logo only */}
+        {/* Logo only - bigger */}
         <Link href="/" className="flex items-center gap-2">
-          <img src="/salamapaylogo.png" alt="Salamapay" className="size-8 object-contain" />
+          <img src="/salamapaylogo.png" alt="Salamapay" className="size-10 object-contain" />
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
           <Link href="#features" className="transition-colors hover:text-primary">Features</Link>
           <Link href="#solutions" className="transition-colors hover:text-primary">Solutions</Link>
           <Link href="#pricing" className="transition-colors hover:text-primary">Pricing</Link>
@@ -46,19 +46,19 @@ export function LandingHeader() {
           {!isLoading && (
             <>
               {isAuthenticated ? (
-                <Link href="/dashboard">
-                  <Button size="sm" className="hidden md:flex">
+                <Link href="/dashboard" className="hidden md:block">
+                  <Button size="sm" className="rounded-full h-9 px-5 shadow-sm">
                     <HugeiconsIcon icon={DashboardSquare02Icon} className="size-4" />
                     Dashboard
                   </Button>
                 </Link>
               ) : (
-                <div className="hidden md:flex items-center gap-3">
+                <div className="hidden md:flex items-center gap-2">
                   <Link href="/auth/login">
-                    <Button variant="ghost" size="sm">Login</Button>
+                    <Button variant="ghost" size="sm" className="rounded-full h-9 px-5">Login</Button>
                   </Link>
                   <Link href="/auth/register">
-                    <Button size="sm">Get Started</Button>
+                    <Button size="sm" className="rounded-full h-9 px-5 shadow-sm">Get Started</Button>
                   </Link>
                 </div>
               )}
@@ -80,7 +80,7 @@ export function LandingHeader() {
                 <>
                   {isAuthenticated ? (
                     <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                      <Button size="sm" className="w-full">
+                      <Button size="sm" className="w-full rounded-full h-10 shadow-sm">
                         <HugeiconsIcon icon={DashboardSquare02Icon} className="size-4" />
                         Dashboard
                       </Button>
@@ -88,10 +88,10 @@ export function LandingHeader() {
                   ) : (
                     <>
                       <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)}>
-                        <Button variant="ghost" size="sm" className="w-full">Login</Button>
+                        <Button variant="ghost" size="sm" className="w-full rounded-full h-10">Login</Button>
                       </Link>
                       <Link href="/auth/register" onClick={() => setMobileMenuOpen(false)}>
-                        <Button size="sm" className="w-full">Get Started</Button>
+                        <Button size="sm" className="w-full rounded-full h-10 shadow-sm">Get Started</Button>
                       </Link>
                     </>
                   )}

@@ -1,24 +1,51 @@
 "use client"
 
 import Link from "next/link"
+import { useState } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { 
-  TwitterIcon, 
-  InstagramIcon, 
-  Linkedin01Icon, 
+import {
+  TwitterIcon,
+  InstagramIcon,
+  Linkedin01Icon,
   Facebook01Icon,
-  ArrowRight01Icon,
   AppleIcon,
-  PlayStoreIcon
+  PlayStoreIcon,
+  SentIcon,
+  Mail01Icon,
 } from "@hugeicons/core-free-icons"
-import { Separator } from "@/components/ui/separator"
 
-function DownloadButton({ icon: Icon, title, subtitle }: { icon: any, title: string, subtitle: string }) {
+const footerColumns = [
+  {
+    title: "Products",
+    links: ["Salamapay Me", "Salamapay Store", "Salamapay Pay", "Mobile App"],
+  },
+  {
+    title: "Developers",
+    links: ["Documentation", "API Reference", "Webhooks", "Status"],
+  },
+  {
+    title: "Resources",
+    links: ["Pricing", "Blog", "Help Center", "Get Verified"],
+  },
+  {
+    title: "Company",
+    links: ["About", "Careers", "Affiliates", "Contact"],
+  },
+]
+
+const socials = [
+  { icon: TwitterIcon, label: "Twitter" },
+  { icon: InstagramIcon, label: "Instagram" },
+  { icon: Linkedin01Icon, label: "LinkedIn" },
+  { icon: Facebook01Icon, label: "Facebook" },
+]
+
+function DownloadPill({ icon: Icon, title, subtitle }: { icon: any; title: string; subtitle: string }) {
   return (
-    <button className="flex items-center gap-3 px-4 py-2 bg-black text-white rounded-xl border border-zinc-800 hover:bg-zinc-900 transition-colors w-full sm:w-auto text-left">
-      <HugeiconsIcon icon={Icon} className="size-6 shrink-0" />
+    <button className="flex items-center gap-3 px-4 py-2.5 bg-white/5 hover:bg-white/10 text-white rounded-xl border border-white/10 transition-colors w-full sm:w-auto text-left backdrop-blur-sm">
+      <HugeiconsIcon icon={Icon} className="size-5 shrink-0 text-white/90" />
       <div className="flex flex-col leading-tight">
-        <span className="text-[10px] uppercase font-medium text-zinc-400">{subtitle}</span>
+        <span className="text-[9px] uppercase font-medium text-white/50 tracking-wide">{subtitle}</span>
         <span className="text-sm font-bold">{title}</span>
       </div>
     </button>
@@ -26,120 +53,122 @@ function DownloadButton({ icon: Icon, title, subtitle }: { icon: any, title: str
 }
 
 export function LandingFooter() {
+  const [email, setEmail] = useState("")
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email) return
+    setSubmitted(true)
+    setEmail("")
+    setTimeout(() => setSubmitted(false), 3000)
+  }
+
   return (
-    <footer className="border-t bg-muted/30 backdrop-blur-sm">
-      <div className="container mx-auto px-4 py-16">
-        {/* App Store Card - Now at the top of the footer */}
-        <div className="mb-16 animate-in fade-in slide-in-from-bottom duration-1000">
-          <div className="relative mx-auto max-w-4xl p-8 md:p-12 rounded-[2rem] overflow-hidden border border-border shadow-xl bg-background">
-            {/* Background Pattern */}
-            <div 
-              className="absolute inset-0 z-0 opacity-[0.05] dark:opacity-[0.1]" 
-              style={{ 
-                backgroundImage: 'url(/hero-pattern.png)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}
-            />
-            {/* Overlay for contrast */}
-            <div className="absolute inset-0 bg-white/40 dark:bg-black/40 z-0" />
-            
-            <div className="relative z-10 flex flex-col items-center gap-6 text-center">
-              <div className="space-y-3">
-                <h3 className="text-2xl md:text-3xl font-bold tracking-tight">Download Salamapay mobile app</h3>
-                <p className="text-muted-foreground max-w-lg mx-auto text-sm md:text-base leading-relaxed">
-                  Salamapay in your pocket. Track payments, send payouts, and manage your business from anywhere.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center">
-                <DownloadButton icon={AppleIcon} title="App Store" subtitle="Download on the" />
-                <DownloadButton icon={PlayStoreIcon} title="Google Play" subtitle="Get it on" />
-              </div>
+    <footer className="relative overflow-hidden bg-zinc-950 text-white">
+      {/* Ambient glow */}
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[36rem] -translate-x-1/2 rounded-full bg-primary/20 blur-[120px]" />
+
+      <div className="relative container mx-auto px-4 pt-20 pb-10">
+        {/* Top: Brand + Newsletter */}
+        <div className="grid gap-12 lg:grid-cols-2 pb-16 border-b border-white/10">
+          <div>
+            <div className="flex items-center gap-2 mb-5">
+              <img src="/salamapaylogo.png" alt="Salamapay" className="size-9 object-contain" />
+              <span className="text-2xl font-bold tracking-tight">Salamapay</span>
             </div>
+            <p className="text-sm text-white/60 max-w-sm leading-relaxed mb-8">
+              The payment infrastructure for African creators, merchants, and builders.
+              Mobile money, cards, and bank transfers — one simple API. Built in Dar es Salaam, Tanzania.
+            </p>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <DownloadPill icon={AppleIcon} title="App Store" subtitle="Download on the" />
+              <DownloadPill icon={PlayStoreIcon} title="Google Play" subtitle="Get it on" />
+            </div>
+          </div>
+
+          <div className="lg:pl-8 lg:border-l lg:border-white/10 flex flex-col justify-center">
+            <div className="flex items-center gap-2 mb-3">
+              <HugeiconsIcon icon={Mail01Icon} className="size-4 text-primary" />
+              <h4 className="font-bold text-sm uppercase tracking-wider text-white/80">Stay in the loop</h4>
+            </div>
+            <p className="text-sm text-white/50 mb-5 max-w-md leading-relaxed">
+              Product updates, new payment channels, and developer changelogs — straight to your inbox. No spam.
+            </p>
+            <form onSubmit={handleSubscribe} className="flex w-full max-w-md items-center gap-2">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@company.com"
+                className="flex-1 h-11 rounded-lg bg-white/5 border border-white/10 px-4 text-sm text-white placeholder:text-white/30 outline-none focus:border-primary/60 focus:bg-white/10 transition-all"
+              />
+              <button
+                type="submit"
+                className="flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg bg-primary text-white text-sm font-semibold shrink-0 hover:opacity-90 transition-opacity"
+              >
+                {submitted ? "Subscribed" : "Subscribe"}
+                {!submitted && <HugeiconsIcon icon={SentIcon} className="size-3.5" />}
+              </button>
+            </form>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-12 md:grid-cols-4 lg:grid-cols-5">
-          <div className="col-span-2 lg:col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-              <img src="/salamapaylogo.png" alt="Salamapay" className="size-8 object-contain" />
-              <span className="text-xl font-bold tracking-tight">Salamapay</span>
+        {/* Middle: Link columns */}
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-4 py-14">
+          {footerColumns.map((col) => (
+            <div key={col.title}>
+              <h4 className="font-bold text-xs mb-5 uppercase tracking-widest text-white/40">{col.title}</h4>
+              <ul className="space-y-3.5 text-sm">
+                {col.links.map((link) => (
+                  <li key={link}>
+                    <Link href="#" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                      {link}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <p className="text-sm text-muted-foreground max-w-xs mb-8">
-              The revenue engine for African creators, merchants, and builders. 
-              Built in Dar es Salaam, Tanzania.
-            </p>
-            <div className="space-y-4">
-              <h4 className="font-bold text-sm">See what you&apos;ll pay</h4>
-              <p className="text-xs text-muted-foreground max-w-[200px]">
-                Integrated per-transaction pricing with no hidden fees.
-              </p>
-              <Link href="#" className="text-sm font-medium text-primary hover:underline flex items-center gap-1">
-                Pricing details <HugeiconsIcon icon={ArrowRight01Icon} className="size-3" />
-              </Link>
-            </div>
-          </div>
-          <div>
-            <h4 className="font-bold text-sm mb-6 uppercase tracking-wider">Products</h4>
-            <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">Salamapay Me</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Salamapay Store</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Salamapay Pay</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Mobile App</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold text-sm mb-6 uppercase tracking-wider">Resources</h4>
-            <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">Pricing</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Documentation</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Blog</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Help center</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Get verified</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold text-sm mb-6 uppercase tracking-wider">Company</h4>
-            <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">About</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Careers</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Affiliates</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Contacts</Link></li>
-            </ul>
-          </div>
+          ))}
         </div>
-        <div className="mt-16 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex flex-col md:flex-row items-center gap-4 text-xs text-muted-foreground">
+
+        {/* Giant wordmark */}
+        <div className="relative select-none py-4 overflow-hidden">
+          <h2 className="text-center font-black tracking-tighter leading-none text-white/[0.06] text-[18vw] sm:text-[14vw] lg:text-[10rem] whitespace-nowrap">
+            SALAMAPAY
+          </h2>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col md:flex-row items-center gap-4 text-xs text-white/40 text-center md:text-left">
             <p>© {new Date().getFullYear()} Salamapay Payments. All rights reserved.</p>
-            <div className="hidden md:flex gap-4 items-center opacity-30">
-              <div className="size-1 rounded-full bg-current" />
-              <Link href="#" className="hover:text-foreground transition-colors">Privacy Policy</Link>
-              <div className="size-1 rounded-full bg-current" />
-              <Link href="#" className="hover:text-foreground transition-colors">Terms of Service</Link>
+            <div className="hidden md:flex gap-4 items-center">
+              <div className="size-1 rounded-full bg-white/20" />
+              <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <div className="size-1 rounded-full bg-white/20" />
+              <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Link href="#" className="p-2 rounded-full hover:bg-primary/10 hover:text-primary transition-all">
-              <HugeiconsIcon icon={TwitterIcon} className="size-4" />
-            </Link>
-            <Separator orientation="vertical" className="h-4" />
-            <Link href="#" className="p-2 rounded-full hover:bg-primary/10 hover:text-primary transition-all">
-              <HugeiconsIcon icon={InstagramIcon} className="size-4" />
-            </Link>
-            <Separator orientation="vertical" className="h-4" />
-            <Link href="#" className="p-2 rounded-full hover:bg-primary/10 hover:text-primary transition-all">
-              <HugeiconsIcon icon={Linkedin01Icon} className="size-4" />
-            </Link>
-            <Separator orientation="vertical" className="h-4" />
-            <Link href="#" className="p-2 rounded-full hover:bg-primary/10 hover:text-primary transition-all">
-              <HugeiconsIcon icon={Facebook01Icon} className="size-4" />
-            </Link>
+          <div className="flex items-center gap-2">
+            {socials.map((s) => (
+              <Link
+                key={s.label}
+                href="#"
+                aria-label={s.label}
+                className="flex size-9 items-center justify-center rounded-full border border-white/10 text-white/60 hover:text-white hover:border-primary/50 hover:bg-primary/10 transition-all"
+              >
+                <HugeiconsIcon icon={s.icon} className="size-4" />
+              </Link>
+            ))}
           </div>
         </div>
+
         {/* Mobile-only policy links */}
-        <div className="md:hidden mt-4 flex justify-center gap-6 text-[10px] text-muted-foreground opacity-60">
-           <Link href="#" className="hover:text-foreground transition-colors">Privacy Policy</Link>
-           <Link href="#" className="hover:text-foreground transition-colors">Terms of Service</Link>
+        <div className="md:hidden mt-4 flex justify-center gap-6 text-[10px] text-white/30">
+          <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+          <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
         </div>
       </div>
     </footer>

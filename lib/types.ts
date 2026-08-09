@@ -141,6 +141,7 @@ export interface Transaction extends BaseModel {
   payment_token: string | null
   checkout_url: string | null
   payer_msisdn: string | null
+  fee_amount: string | null
   failure_reason: string | null
   metadata: Record<string, unknown>
   completed_at: string | null
@@ -149,7 +150,6 @@ export interface Transaction extends BaseModel {
 export interface TransactionReceipt extends Transaction {
   date_formatted?: string
   amount_formatted?: string
-  fee_amount?: string
   fee_formatted?: string
   net_amount?: string
   net_formatted?: string

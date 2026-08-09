@@ -8,14 +8,14 @@ import Link from "next/link"
 
 const headlines = [
   {
-    main: "Malipo Yote",
-    highlight: "Sehemu Moja",
-    sub: "Pokea na kutuma malipo kwa M-Pesa, Tigo Pesa, Airtel Money na HaloPesa. App na web — yote Salamapay."
+    main: "All Payments",
+    highlight: "In One Place",
+    sub: "Accept and send payments via M-Pesa, Tigo Pesa, Airtel Money and HaloPesa. App and web — all on Salamapay."
   },
   {
-    main: "Manage Biashara",
-    highlight: "Kwa Urahisi",
-    sub: "Wallets, reports, staff, na biashara nyingi — databashi yote sehemu moja, kwa simu au kompyuta."
+    main: "Manage Your",
+    highlight: "Business With Ease",
+    sub: "Wallets, reports, staff, and multiple businesses — everything in one place, on mobile or web."
   }
 ]
 

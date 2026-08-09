@@ -47,7 +47,7 @@ export function LandingHeader() {
             <>
               {isAuthenticated ? (
                 <Link href="/dashboard" className="hidden md:block">
-                  <Button size="sm" className="rounded-full h-9 px-5 shadow-sm">
+                  <Button size="sm" className="h-9 px-5 shadow-sm">
                     <HugeiconsIcon icon={DashboardSquare02Icon} className="size-4" />
                     Dashboard
                   </Button>
@@ -55,10 +55,10 @@ export function LandingHeader() {
               ) : (
                 <div className="hidden md:flex items-center gap-2">
                   <Link href="/auth/login">
-                    <Button variant="ghost" size="sm" className="rounded-full h-9 px-5">Login</Button>
+                    <Button variant="ghost" size="sm" className="h-9 px-5">Login</Button>
                   </Link>
                   <Link href="/auth/register">
-                    <Button size="sm" className="rounded-full h-9 px-5 shadow-sm">Get Started</Button>
+                    <Button size="sm" className="h-9 px-5 shadow-sm">Get Started</Button>
                   </Link>
                 </div>
               )}
@@ -80,7 +80,7 @@ export function LandingHeader() {
                 <>
                   {isAuthenticated ? (
                     <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                      <Button size="sm" className="w-full rounded-full h-10 shadow-sm">
+                      <Button size="sm" className="w-full h-10 shadow-sm">
                         <HugeiconsIcon icon={DashboardSquare02Icon} className="size-4" />
                         Dashboard
                       </Button>
@@ -88,10 +88,10 @@ export function LandingHeader() {
                   ) : (
                     <>
                       <Link href="/auth/login" onClick={() => setMobileMenuOpen(false)}>
-                        <Button variant="ghost" size="sm" className="w-full rounded-full h-10">Login</Button>
+                        <Button variant="ghost" size="sm" className="w-full h-10">Login</Button>
                       </Link>
                       <Link href="/auth/register" onClick={() => setMobileMenuOpen(false)}>
-                        <Button size="sm" className="w-full rounded-full h-10 shadow-sm">Get Started</Button>
+                        <Button size="sm" className="w-full h-10 shadow-sm">Get Started</Button>
                       </Link>
                     </>
                   )}

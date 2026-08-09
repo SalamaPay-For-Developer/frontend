@@ -68,7 +68,7 @@ export default function WalletsPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
           {wallets.map((wallet) => (
             <Card key={wallet.id} className={wallet.wallet_type === "BUSINESS" ? "border-primary/20" : ""}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

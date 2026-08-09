@@ -110,10 +110,10 @@ export default function StaffPage() {
 
   return (
     <DashboardShell breadcrumb="Staff & Roles">
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold tracking-tight">Staff & Roles</h1>
-          <p className="text-muted-foreground">Manage team members for {activeBusiness.business_name}.</p>
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Staff & Roles</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Manage team members for {activeBusiness.business_name}.</p>
         </div>
         <Button onClick={() => setShowInvite(true)}>
           <HugeiconsIcon icon={PlusSignIcon} className="size-4" />
@@ -132,6 +132,7 @@ export default function StaffPage() {
               <p className="text-muted-foreground">No team members yet.</p>
             </div>
           ) : (
+            <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -158,6 +159,7 @@ export default function StaffPage() {
                 ))}
               </TableBody>
             </Table>
+            </div>
           )}
         </CardContent>
       </Card>

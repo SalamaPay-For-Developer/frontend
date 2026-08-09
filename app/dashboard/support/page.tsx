@@ -32,10 +32,10 @@ export default function SupportPage() {
 
   return (
     <DashboardShell breadcrumb="Support">
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold tracking-tight">Support</h1>
-          <p className="text-muted-foreground">Get help with your account and transactions.</p>
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Support</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Get help with your account and transactions.</p>
         </div>
         <Button onClick={() => setShowForm(!showForm)}>
           <HugeiconsIcon icon={PlusSignIcon} className="size-4" />

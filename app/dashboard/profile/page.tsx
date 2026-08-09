@@ -16,13 +16,13 @@ export default function ProfilePage() {
 
   return (
     <DashboardShell breadcrumb="Profile">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Profile</h1>
-        <p className="text-muted-foreground">Manage your personal information.</p>
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Profile</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">Manage your personal information.</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card className="md:col-span-1">
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-3 sm:gap-4">
+        <Card className="sm:col-span-1">
           <CardContent className="flex flex-col items-center gap-4 pt-6">
             <div className="flex size-20 items-center justify-center rounded-full bg-primary/10">
               <HugeiconsIcon icon={UserCircleIcon} className="size-10 text-primary" />
@@ -37,7 +37,7 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-2">
+        <Card className="sm:col-span-2">
           <CardHeader><CardTitle>Personal Information</CardTitle></CardHeader>
           <CardContent className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">

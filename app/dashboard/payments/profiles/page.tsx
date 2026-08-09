@@ -139,10 +139,10 @@ export default function PaymentProfilesPage() {
 
   return (
     <DashboardShell breadcrumb="Payment Profiles">
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold tracking-tight">Payment Profiles</h1>
-          <p className="text-muted-foreground">Manage profiles used for generating payment links.</p>
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Payment Profiles</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Manage profiles used for generating payment links.</p>
         </div>
         <Button size="sm" onClick={() => { resetForm(); setShowCreate(true) }}>
           <HugeiconsIcon icon={PlusSignIcon} className="size-4" />
@@ -169,13 +169,14 @@ export default function PaymentProfilesPage() {
               </Button>
             </div>
           ) : (
+            <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Payment Method</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>Description</TableHead>
+                  <TableHead className="hidden sm:table-cell">Phone</TableHead>
+                  <TableHead className="hidden md:table-cell">Description</TableHead>
                   <TableHead>Created</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -192,8 +193,8 @@ export default function PaymentProfilesPage() {
                         <Badge variant="outline">{METHOD_LABELS[profile.payment_method] || profile.payment_method}</Badge>
                       </div>
                     </TableCell>
-                    <TableCell className="text-muted-foreground">{profile.phone || "—"}</TableCell>
-                    <TableCell className="text-muted-foreground">{profile.description || "—"}</TableCell>
+                    <TableCell className="text-muted-foreground hidden sm:table-cell">{profile.phone || "—"}</TableCell>
+                    <TableCell className="text-muted-foreground hidden md:table-cell">{profile.description || "—"}</TableCell>
                     <TableCell className="text-muted-foreground text-sm">
                       {new Date(profile.created_at).toLocaleDateString("en-GB", {
                         day: "2-digit",
@@ -215,6 +216,7 @@ export default function PaymentProfilesPage() {
                 ))}
               </TableBody>
             </Table>
+            </div>
           )}
         </CardContent>
       </Card>

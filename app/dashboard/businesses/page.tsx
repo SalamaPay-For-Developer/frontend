@@ -82,10 +82,10 @@ export default function BusinessesPage() {
 
   return (
     <DashboardShell breadcrumb="My Businesses">
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold tracking-tight">My Businesses</h1>
-          <p className="text-muted-foreground">Manage all your businesses in one place.</p>
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">My Businesses</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Manage all your businesses in one place.</p>
         </div>
         <Button onClick={() => setShowForm(!showForm)}>
           <HugeiconsIcon icon={PlusSignIcon} className="size-4" />
@@ -143,7 +143,7 @@ export default function BusinessesPage() {
         </Card>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
         {businesses.length === 0 ? (
           <Card className="col-span-full border-dashed">
             <CardContent className="flex flex-col items-center justify-center gap-4 py-12">

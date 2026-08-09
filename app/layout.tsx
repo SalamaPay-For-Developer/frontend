@@ -7,6 +7,12 @@ import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { AuthProvider } from "@/lib/auth-context"
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+}
+
 const geistHeading = Geist({subsets:['latin'],variable:'--font-heading'});
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'})

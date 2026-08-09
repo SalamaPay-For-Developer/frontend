@@ -75,7 +75,7 @@ export default function KycPage() {
       <div className="flex flex-col gap-6 max-w-2xl mx-auto w-full">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-bold tracking-tight">KYC Verification</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">KYC Verification</h1>
               <Badge variant={activeBusiness.kyc_status === "APPROVED" ? "default" : "secondary"}>
                 {activeBusiness.kyc_status}
               </Badge>

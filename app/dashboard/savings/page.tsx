@@ -94,10 +94,10 @@ export default function SavingsPage() {
 
   return (
     <DashboardShell breadcrumb="Savings">
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold tracking-tight">Savings (Akiba)</h1>
-          <p className="text-muted-foreground">Set savings goals and track your progress.</p>
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Savings (Akiba)</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Set savings goals and track your progress.</p>
         </div>
         <Button onClick={() => setShowCreate(true)}>
           <HugeiconsIcon icon={PlusSignIcon} className="size-4" />
@@ -144,7 +144,7 @@ export default function SavingsPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4">
           {goals.map((goal) => {
             const progress = goal.target_amount ? Math.min(100, (Number(goal.current_amount) / Number(goal.target_amount)) * 100) : 0
             return (

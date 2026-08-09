@@ -106,9 +106,9 @@ export default function Page() {
 
   return (
     <DashboardShell breadcrumb="Dashboard Overview">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">{greeting}</h1>
-        <p className="text-muted-foreground">
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">{greeting}</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">
           Karibu kwenye dashboard yako ya Salamapay.
         </p>
       </div>
@@ -136,8 +136,8 @@ export default function Page() {
 
       {/* Active business - show KYC status */}
       {activeBusiness && (
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-muted-foreground">Business:</span>
+        <div className="flex items-center gap-2 flex-wrap text-sm">
+          <span className="text-muted-foreground">Business:</span>
           <span className="font-medium">{activeBusiness.business_name}</span>
           <Badge variant={activeBusiness.kyc_status === "APPROVED" ? "default" : "secondary"}>
             KYC: {activeBusiness.kyc_status}
@@ -150,7 +150,7 @@ export default function Page() {
         </div>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 grid-cols-2 lg:grid-cols-4 sm:gap-4">
         <Card className="border-none shadow-sm bg-primary text-primary-foreground">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Balance</CardTitle>
@@ -202,7 +202,7 @@ export default function Page() {
       </div>
 
       {/* Charts row */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+      <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-7 sm:gap-4">
         <Card className="lg:col-span-4 border-none shadow-sm dark:bg-muted/50">
           <CardHeader>
             <CardTitle>Revenue (Last 7 Days)</CardTitle>
@@ -261,7 +261,7 @@ export default function Page() {
       </div>
 
       {/* Recent activity + Quick actions */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+      <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-7 sm:gap-4">
         <Card className="lg:col-span-4 border-none shadow-sm overflow-hidden dark:bg-muted/50">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Recent Activity</CardTitle>
@@ -310,7 +310,7 @@ export default function Page() {
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-4">
+          <CardContent className="grid grid-cols-2 gap-3 sm:gap-4">
             <Button variant="outline" className="h-20 flex-col gap-2 border-dashed" render={<Link href="/dashboard/onboarding" />}>
               <HugeiconsIcon icon={PlusSignIcon} className="size-5" />
               New Business

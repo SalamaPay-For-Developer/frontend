@@ -113,15 +113,15 @@ export function OTPForm({
             onComplete={handleSubmit}
           >
             <InputOTPGroup>
-              <InputOTPSlot index={0} className="size-12 text-lg" />
-              <InputOTPSlot index={1} className="size-12 text-lg" />
-              <InputOTPSlot index={2} className="size-12 text-lg" />
+              <InputOTPSlot index={0} className="size-10 text-base sm:size-12 sm:text-lg" />
+              <InputOTPSlot index={1} className="size-10 text-base sm:size-12 sm:text-lg" />
+              <InputOTPSlot index={2} className="size-10 text-base sm:size-12 sm:text-lg" />
             </InputOTPGroup>
-            <InputOTPSeparator />
+            <InputOTPSeparator className="hidden sm:flex" />
             <InputOTPGroup>
-              <InputOTPSlot index={3} className="size-12 text-lg" />
-              <InputOTPSlot index={4} className="size-12 text-lg" />
-              <InputOTPSlot index={5} className="size-12 text-lg" />
+              <InputOTPSlot index={3} className="size-10 text-base sm:size-12 sm:text-lg" />
+              <InputOTPSlot index={4} className="size-10 text-base sm:size-12 sm:text-lg" />
+              <InputOTPSlot index={5} className="size-10 text-base sm:size-12 sm:text-lg" />
             </InputOTPGroup>
           </InputOTP>
         </Field>

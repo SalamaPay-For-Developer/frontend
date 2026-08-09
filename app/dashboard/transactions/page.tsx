@@ -120,24 +120,24 @@ export default function TransactionsPage() {
 
   return (
     <DashboardShell breadcrumb="Transactions">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Transactions</h1>
-        <p className="text-muted-foreground">View and manage all your payment transactions.</p>
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Transactions</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">View and manage all your payment transactions.</p>
       </div>
 
       <Tabs value={statusFilter} onValueChange={setStatusFilter}>
         <TabsList className="flex-wrap h-auto">
           <TabsTrigger value="ALL">All ({counts.ALL || 0})</TabsTrigger>
-          <TabsTrigger value="SUCCESS">Successful ({counts.SUCCESS || 0})</TabsTrigger>
+          <TabsTrigger value="SUCCESS">Success ({counts.SUCCESS || 0})</TabsTrigger>
           <TabsTrigger value="PENDING">Pending ({counts.PENDING || 0})</TabsTrigger>
-          <TabsTrigger value="PROCESSING">Processing ({counts.PROCESSING || 0})</TabsTrigger>
+          <TabsTrigger value="PROCESSING" className="hidden sm:inline-flex">Processing ({counts.PROCESSING || 0})</TabsTrigger>
           <TabsTrigger value="FAILED">Failed ({counts.FAILED || 0})</TabsTrigger>
-          <TabsTrigger value="REVERSED">Reversed ({counts.REVERSED || 0})</TabsTrigger>
+          <TabsTrigger value="REVERSED" className="hidden sm:inline-flex">Reversed ({counts.REVERSED || 0})</TabsTrigger>
         </TabsList>
       </Tabs>
 
-      <div className="flex items-center gap-2">
-        <div className="relative flex-1 max-w-sm">
+      <div className="flex items-center gap-2 flex-wrap">
+        <div className="relative flex-1 min-w-[140px] max-w-sm">
           <HugeiconsIcon
             icon={Search01Icon}
             className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
@@ -176,6 +176,7 @@ export default function TransactionsPage() {
               No transactions found.
             </div>
           ) : (
+            <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -226,6 +227,7 @@ export default function TransactionsPage() {
                 ))}
               </TableBody>
             </Table>
+            </div>
           )}
         </CardContent>
       </Card>

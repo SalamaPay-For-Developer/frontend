@@ -13,12 +13,12 @@ import { BankIcon, ArrowDown01Icon, Download04Icon } from "@hugeicons/core-free-
 export default function SettlementsPage() {
   return (
     <DashboardShell breadcrumb="Settlements">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Settlements</h1>
-        <p className="text-muted-foreground">Manage your settlement balance and requests.</p>
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Settlements</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">Manage your settlement balance and requests.</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-3 sm:gap-4">
         <Card className="bg-primary text-primary-foreground border-none shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Available</CardTitle>

@@ -287,14 +287,14 @@ export default function PaymentsPage() {
 
   return (
     <DashboardShell breadcrumb="Payments">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Payments</h1>
-        <p className="text-muted-foreground">Make and receive payments, generate QR codes and payment links.</p>
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Payments</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">Make and receive payments, generate QR codes and payment links.</p>
       </div>
 
       {/* Action bar */}
       <div className="flex items-center gap-2 flex-wrap">
-        <div className="relative flex-1 max-w-sm">
+        <div className="relative flex-1 min-w-[140px] max-w-sm">
           <HugeiconsIcon
             icon={Search01Icon}
             className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
@@ -323,11 +323,11 @@ export default function PaymentsPage() {
       {/* Filter panel */}
       {showFilters && (
         <Card>
-          <CardContent className="flex flex-wrap items-end gap-4 py-4">
-            <div className="flex flex-col gap-1.5">
+          <CardContent className="flex flex-wrap items-end gap-3 sm:gap-4 py-4">
+            <div className="flex flex-col gap-1.5 w-full sm:w-auto">
               <Label className="text-xs">Status</Label>
               <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v || "ALL")}>
-                <SelectTrigger className="w-40">
+                <SelectTrigger className="w-full sm:w-40">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -341,10 +341,10 @@ export default function PaymentsPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1.5 w-full sm:w-auto">
               <Label className="text-xs">Channel</Label>
               <Select value={channelFilter} onValueChange={(v) => setChannelFilter(v || "ALL")}>
-                <SelectTrigger className="w-40">
+                <SelectTrigger className="w-full sm:w-40">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -366,7 +366,7 @@ export default function PaymentsPage() {
       )}
 
       {/* Summary stats */}
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-3 sm:gap-4">
         <Card>
           <CardContent className="flex items-center justify-between py-4">
             <div>
@@ -420,6 +420,7 @@ export default function PaymentsPage() {
               <p className="text-muted-foreground">No payments found. Click "Pay" to get started.</p>
             </div>
           ) : (
+            <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -427,7 +428,7 @@ export default function PaymentsPage() {
                   <TableHead>Type</TableHead>
                   <TableHead>Channel</TableHead>
                   <TableHead>Amount</TableHead>
-                  <TableHead>Fee</TableHead>
+                  <TableHead className="hidden sm:table-cell">Fee</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Date</TableHead>
                 </TableRow>
@@ -453,10 +454,10 @@ export default function PaymentsPage() {
                         </div>
                       </TableCell>
                       <TableCell>{tx.channel}</TableCell>
-                      <TableCell className="font-medium">
+                      <TableCell className="font-medium whitespace-nowrap">
                         {tx.currency} {Number(tx.amount).toLocaleString()}
                       </TableCell>
-                      <TableCell className="text-muted-foreground text-sm">
+                      <TableCell className="hidden sm:table-cell text-muted-foreground text-sm">
                         {feeAmount > 0 ? `${tx.currency} ${feeAmount.toLocaleString(undefined, { maximumFractionDigits: 0 })}` : "—"}
                       </TableCell>
                       <TableCell>
@@ -476,6 +477,7 @@ export default function PaymentsPage() {
                 })}
               </TableBody>
             </Table>
+            </div>
           )}
         </CardContent>
       </Card>
@@ -487,6 +489,7 @@ export default function PaymentsPage() {
             <CardTitle>Payment Fees</CardTitle>
           </CardHeader>
           <CardContent>
+            <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -511,6 +514,7 @@ export default function PaymentsPage() {
                 ))}
               </TableBody>
             </Table>
+            </div>
           </CardContent>
         </Card>
       )}
@@ -530,7 +534,7 @@ export default function PaymentsPage() {
 
           <div className="flex flex-col gap-4 p-4 overflow-y-auto">
             {/* Mode selector tabs */}
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               <Button
                 variant={drawerMode === "receive" ? "default" : "outline"}
                 size="sm"

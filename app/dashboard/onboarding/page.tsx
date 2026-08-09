@@ -100,9 +100,9 @@ export default function OnboardingPage() {
   return (
     <DashboardShell breadcrumb="New Business">
       <div className="flex flex-col gap-6 max-w-2xl mx-auto w-full">
-          <div className="flex flex-col gap-2">
-            <h1 className="text-3xl font-bold tracking-tight">Onboard Your Business</h1>
-            <p className="text-muted-foreground">Create a new business to start accepting payments.</p>
+          <div className="flex flex-col gap-1">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Onboard Your Business</h1>
+            <p className="text-sm sm:text-base text-muted-foreground">Create a new business to start accepting payments.</p>
           </div>
 
           {error && (

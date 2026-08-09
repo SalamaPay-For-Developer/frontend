@@ -83,10 +83,10 @@ export default function ReportsPage() {
 
   return (
     <DashboardShell breadcrumb="Reports">
-      <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold tracking-tight">Reports</h1>
-          <p className="text-muted-foreground">Analyze your transaction performance.</p>
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Reports</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Analyze your transaction performance.</p>
         </div>
         <Button variant="outline" size="sm">
           <HugeiconsIcon icon={Download04Icon} className="size-4" />
@@ -125,7 +125,7 @@ export default function ReportsPage() {
       {isLoading ? (
         <div className="flex items-center justify-center py-12"><Spinner className="size-8" /></div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 sm:gap-4">
           <Card className="border-none shadow-sm dark:bg-muted/50">
             <CardHeader><CardTitle>Revenue vs Payments</CardTitle></CardHeader>
             <CardContent>

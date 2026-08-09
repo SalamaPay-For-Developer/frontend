@@ -35,9 +35,9 @@ const NOTIFICATION_COLORS: Record<string, string> = {
 export default function NotificationsPage() {
   return (
     <DashboardShell breadcrumb="Notifications">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Notifications</h1>
-        <p className="text-muted-foreground">Stay updated on your account activity.</p>
+      <div className="flex flex-col gap-1">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Notifications</h1>
+        <p className="text-sm sm:text-base text-muted-foreground">Stay updated on your account activity.</p>
       </div>
 
       <Card>

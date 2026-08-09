@@ -152,7 +152,7 @@ export default function BusinessDashboardPage() {
             </Card>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+          <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-7 sm:gap-4">
             <Card className="lg:col-span-4 border-none shadow-sm dark:bg-muted/50">
               <CardHeader><CardTitle>Revenue (Last 7 Days)</CardTitle></CardHeader>
               <CardContent>

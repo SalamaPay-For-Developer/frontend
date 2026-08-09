@@ -144,14 +144,14 @@ function QuickstartContent() {
 
       <h2 className="text-xl font-bold mt-12 mb-4">1. Environment Setup</h2>
       <p className="text-muted-foreground mb-4 text-sm leading-relaxed">Set your API base URL and credentials in your environment variables. Never hardcode these in your source code.</p>
-      <CodeBlock language="env" title=".env" code={`SALAMAPAY_BASE_URL=https://api.lipasalama.co.tz/api/v1
+      <CodeBlock language="env" title=".env" code={`SALAMAPAY_BASE_URL=https://lipasalama.co.tz/api/v1
 SALAMAPAY_SECRET_KEY=sp_sec_test_xxxxxx`} />
 
       <h2 className="text-xl font-bold mt-12 mb-4">2. Create a Payment</h2>
       <p className="text-muted-foreground mb-6 text-sm leading-relaxed">Send a POST request to initiate a payment collection. This will trigger a PUSH prompt on the customer's phone.</p>
       
       <CodeTabs examples={[
-        { language: "curl", label: "cURL", code: `curl -X POST "https://api.lipasalama.co.tz/api/v1/payments/transactions/collect/" \\
+        { language: "curl", label: "cURL", code: `curl -X POST "https://lipasalama.co.tz/api/v1/payments/transactions/collect/" \\
   -H "Authorization: Bearer YOUR_SECRET_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -161,7 +161,7 @@ SALAMAPAY_SECRET_KEY=sp_sec_test_xxxxxx`} />
     "channel": "MPESA",
     "payer_msisdn": "255700000000"
   }'` },
-        { language: "javascript", label: "JavaScript", code: `const response = await fetch("https://api.lipasalama.co.tz/api/v1/payments/transactions/collect/", {
+        { language: "javascript", label: "JavaScript", code: `const response = await fetch("https://lipasalama.co.tz/api/v1/payments/transactions/collect/", {
   method: "POST",
   headers: {
     "Authorization": "Bearer YOUR_SECRET_KEY",

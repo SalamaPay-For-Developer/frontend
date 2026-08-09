@@ -25,6 +25,7 @@ export function LandingHeader() {
           <Link href="#features" className="transition-colors hover:text-primary">Features</Link>
           <Link href="#solutions" className="transition-colors hover:text-primary">Solutions</Link>
           <Link href="/docs" className="transition-colors hover:text-primary">Docs</Link>
+          <a href="https://www.getpostman.com" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-primary">Postman</a>
           <Link href="#pricing" className="transition-colors hover:text-primary">Pricing</Link>
           <Link href="#faq" className="transition-colors hover:text-primary">FAQ</Link>
         </nav>
@@ -82,6 +83,7 @@ export function LandingHeader() {
             <Link href="#features" className="transition-colors hover:text-primary" onClick={() => setMobileMenuOpen(false)}>Features</Link>
             <Link href="#solutions" className="transition-colors hover:text-primary" onClick={() => setMobileMenuOpen(false)}>Solutions</Link>
             <Link href="/docs" className="transition-colors hover:text-primary" onClick={() => setMobileMenuOpen(false)}>Docs</Link>
+            <a href="https://www.getpostman.com" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-primary" onClick={() => setMobileMenuOpen(false)}>Postman</a>
             <Link href="#pricing" className="transition-colors hover:text-primary" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
             <Link href="#faq" className="transition-colors hover:text-primary" onClick={() => setMobileMenuOpen(false)}>FAQ</Link>
             <div className="flex flex-col gap-2 pt-2 border-t">

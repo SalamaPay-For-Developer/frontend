@@ -73,7 +73,7 @@ export default function DocsHomePage() {
               <h2 className="text-2xl font-bold tracking-tight mb-4">Base URL</h2>
               <div className="relative group">
                 <pre className="rounded-lg border bg-zinc-50 dark:bg-zinc-900 p-4 font-mono text-sm overflow-x-auto transition-all group-hover:border-primary/30 shadow-sm">
-                  <code>https://api.lipasalama.co.tz/api/v1</code>
+                  <code>https://lipasalama.co.tz/api/v1</code>
                 </pre>
                 <button className="absolute right-4 top-4 p-1.5 rounded-md hover:bg-accent text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
                   <HugeiconsIcon icon={Copy01Icon} className="size-3.5" />

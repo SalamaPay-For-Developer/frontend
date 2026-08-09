@@ -22,10 +22,12 @@ const footerColumns = [
   {
     title: "Developers",
     links: ["Documentation", "API Reference", "Webhooks", "Status"],
+    paths: ["/docs", "/docs/api-reference", "/docs/webhooks", "#"],
   },
   {
     title: "Resources",
     links: ["Pricing", "Blog", "Help Center", "Get Verified"],
+    paths: ["/pricing", "#", "#", "#"],
   },
   {
     title: "Company",
@@ -121,9 +123,9 @@ export function LandingFooter() {
             <div key={col.title}>
               <h4 className="font-bold text-xs mb-5 uppercase tracking-widest text-white/40">{col.title}</h4>
               <ul className="space-y-3.5 text-sm">
-                {col.links.map((link) => (
+                {col.links.map((link, j) => (
                   <li key={link}>
-                    <Link href="#" className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
+                    <Link href={(col.paths && col.paths[j]) || "#"} className="text-white/70 hover:text-white transition-colors inline-flex items-center gap-1 group">
                       {link}
                     </Link>
                   </li>

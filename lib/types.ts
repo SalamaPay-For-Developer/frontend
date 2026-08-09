@@ -149,6 +149,10 @@ export interface Transaction extends BaseModel {
 export interface TransactionReceipt extends Transaction {
   date_formatted?: string
   amount_formatted?: string
+  fee_amount?: string
+  fee_formatted?: string
+  net_amount?: string
+  net_formatted?: string
   type_label?: string
   status_label?: string
   channel_label?: string

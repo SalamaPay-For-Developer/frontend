@@ -208,6 +208,8 @@ export const paymentsApi = {
     apiFetch<Record<string, unknown>>(`/payments/transactions/${reference}/status/`),
   receipt: (reference: string) =>
     apiFetch<import("@/lib/types").TransactionReceipt>(`/payments/transactions/${reference}/receipt/`),
+  fee: (amount: string) =>
+    apiFetch<{ amount: number; fee_amount: number; net_amount: number; fee_rate: string; currency: string }>(`/payments/transactions/fee/?amount=${amount}`),
   summary: () =>
     apiFetch<import("@/lib/types").TransactionSummary>("/payments/transactions/summary/"),
 }
@@ -360,6 +362,8 @@ export const developerApi = {
     }),
   checkoutStatus: (id: string) =>
     apiFetch<{ status: string; order_id: string }>(`/developer/checkouts/${id}/status/`),
+  publicCheckout: (code: string) =>
+    fetch(`${API_BASE_URL}/developer/checkout/${code}/`).then((r) => r.json()),
   logs: () =>
     apiFetch<import("@/lib/types").ApiLog[]>("/developer/logs/"),
   logDetail: (id: string) =>

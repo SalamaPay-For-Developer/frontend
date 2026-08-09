@@ -32,6 +32,7 @@ import {
   ArrowDown01Icon,
   ArrowUp01Icon,
   Download04Icon,
+  Download01Icon,
   CheckmarkCircle01Icon,
   Cancel01Icon,
   Clock01Icon,
@@ -264,6 +265,16 @@ export default function TransactionsPage() {
                 <p className="text-3xl font-bold">
                   {receipt.currency} {Number(receipt.amount).toLocaleString()}
                 </p>
+                {receipt.fee_amount && Number(receipt.fee_amount) > 0 && (
+                  <div className="flex items-center justify-center gap-4 mt-2 text-sm">
+                    <span className="text-muted-foreground">
+                      Fee: <span className="font-semibold text-destructive">{receipt.fee_formatted}</span>
+                    </span>
+                    <span className="text-muted-foreground">
+                      Net: <span className="font-semibold text-green-600 dark:text-green-400">{receipt.net_formatted}</span>
+                    </span>
+                  </div>
+                )}
               </div>
 
               <Separator />
@@ -298,6 +309,82 @@ export default function TransactionsPage() {
                   </div>
                 )}
               </div>
+
+              {receipt.status === "SUCCESS" && (
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => {
+                    const r = receipt
+                    const printContent = `
+                      <html>
+                        <head>
+                          <title>Receipt - ${r.reference}</title>
+                          <style>
+                            * { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+                            body { max-width: 400px; margin: 40px auto; padding: 20px; color: #1a1a1a; }
+                            .header { text-align: center; margin-bottom: 30px; }
+                            .header img { width: 48px; height: 48px; margin: 0 auto; }
+                            .header h1 { font-size: 20px; margin: 10px 0 4px; }
+                            .header p { font-size: 12px; color: #666; margin: 0; }
+                            .status { text-align: center; padding: 12px; border-radius: 8px; background: #ecfdf5; margin-bottom: 20px; }
+                            .status p { margin: 0; font-weight: 600; color: #059669; }
+                            .amount { text-align: center; margin: 20px 0; }
+                            .amount .label { font-size: 12px; color: #666; }
+                            .amount .value { font-size: 32px; font-weight: 800; }
+                            .fees { display: flex; justify-content: center; gap: 20px; font-size: 13px; margin-top: 8px; }
+                            .fees .fee { color: #dc2626; }
+                            .fees .net { color: #059669; font-weight: 600; }
+                            .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 13px; }
+                            .row .label { color: #666; }
+                            .row .value { font-weight: 500; }
+                            .footer { text-align: center; margin-top: 30px; font-size: 11px; color: #999; }
+                          </style>
+                        </head>
+                        <body>
+                          <div class="header">
+                            <img src="${window.location.origin}/salamapaylogo.png" alt="Salamapay" />
+                            <h1>Salamapay</h1>
+                            <p>Payment Receipt</p>
+                          </div>
+                          <div class="status">
+                            <p>✓ ${r.status_label || r.status}</p>
+                          </div>
+                          <div class="amount">
+                            <div class="label">Amount</div>
+                            <div class="value">${r.currency} ${Number(r.amount).toLocaleString()}</div>
+                            ${r.fee_amount && Number(r.fee_amount) > 0 ? `
+                            <div class="fees">
+                              <span class="fee">Fee: ${r.fee_formatted}</span>
+                              <span class="net">Net: ${r.net_formatted}</span>
+                            </div>` : ''}
+                          </div>
+                          <div class="row"><span class="label">Reference</span><span class="value" style="font-family:monospace;font-size:11px">${r.reference}</span></div>
+                          <div class="row"><span class="label">Type</span><span class="value">${r.type_label || r.type}</span></div>
+                          <div class="row"><span class="label">Channel</span><span class="value">${r.channel_label || r.channel}</span></div>
+                          <div class="row"><span class="label">Payer Phone</span><span class="value">${r.payer_msisdn || 'N/A'}</span></div>
+                          <div class="row"><span class="label">Date</span><span class="value">${r.date_formatted || new Date(r.created_at).toLocaleString()}</span></div>
+                          ${r.selcom_transid ? `<div class="row"><span class="label">Provider Ref</span><span class="value" style="font-family:monospace;font-size:11px">${r.selcom_transid}</span></div>` : ''}
+                          <div class="footer">
+                            <p>This is a computer-generated receipt from Salamapay.</p>
+                            <p>© ${new Date().getFullYear()} Salamapay Payments. All rights reserved.</p>
+                          </div>
+                        </body>
+                      </html>
+                    `
+                    const printWin = window.open('', '_blank', 'width=500,height=700')
+                    if (printWin) {
+                      printWin.document.write(printContent)
+                      printWin.document.close()
+                      printWin.focus()
+                      setTimeout(() => printWin.print(), 500)
+                    }
+                  }}
+                >
+                  <HugeiconsIcon icon={Download01Icon} className="size-4" />
+                  Download Receipt (PDF)
+                </Button>
+              )}
             </div>
           ) : (
             <div className="flex items-center justify-center py-8 text-muted-foreground">

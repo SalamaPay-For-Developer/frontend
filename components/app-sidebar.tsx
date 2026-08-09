@@ -62,12 +62,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "Payments",
       url: "/dashboard/payments",
       icon: <HugeiconsIcon icon={CreditCardIcon} strokeWidth={2} />,
-      items: [
-        { title: "Make Payment", url: "/dashboard/payments" },
-        { title: "Receive Payment", url: "/dashboard/payments/receive" },
-        { title: "QR Payments", url: "/dashboard/payments/qr" },
-        { title: "Payment Links", url: "/dashboard/payments/links" },
-      ],
+    },
+    {
+      title: "Payment Profiles",
+      url: "/dashboard/payments/profiles",
+      icon: <HugeiconsIcon icon={Link02Icon} strokeWidth={2} />,
     },
     {
       title: "Transactions",

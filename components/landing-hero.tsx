@@ -85,14 +85,14 @@ export function LandingHero() {
           </p>
         </div>
         
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom duration-1000 delay-500">
-          <Link href="/auth/register">
-            <Button size="lg" className="h-12 px-8 text-base">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 animate-in fade-in slide-in-from-bottom duration-1000 delay-500 w-full sm:w-auto px-4 sm:px-0">
+          <Link href="/auth/register" className="w-full sm:w-auto">
+            <Button size="sm" className="w-full h-10 sm:h-12 sm:px-8 text-sm sm:text-base rounded-full shadow-sm">
               Get Started for Free
               <HugeiconsIcon icon={ArrowRight01Icon} className="ml-2 size-4" />
             </Button>
           </Link>
-          <Button variant="outline" size="lg" className="h-12 px-8 text-base">
+          <Button variant="outline" size="sm" className="w-full h-10 sm:h-12 sm:px-8 text-sm sm:text-base rounded-full">
             Watch Demo
           </Button>
         </div>
